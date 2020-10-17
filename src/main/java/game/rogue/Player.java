@@ -2,7 +2,7 @@ package game.rogue;
 
 public class Player {
     private static final int MAX_LEVEL = 100;
-    private static final int BASE_LEVEL_UP_AMOUNT = 100;
+    private static final int BASE_LEVEL_UP_THRESHOLD = 100;
     private int level;
     private int experience;
 
@@ -31,10 +31,12 @@ public class Player {
     }
 
     public int getNextLevelTreshold(){
-        return BASE_LEVEL_UP_AMOUNT * this.level;
+        return BASE_LEVEL_UP_THRESHOLD * this.level;
     }
 
     public void incrementLevel(){
-        this.level += 1;
+        if (this.level < MAX_LEVEL){
+            this.level += 1;
+        }
     }
 }

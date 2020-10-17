@@ -23,8 +23,20 @@ public class PlayerTest {
     }
 
     @Test
-    public void incrementLevel() {
+    public void levelUp() {
         player.gainExperience(150);
         assertEquals(2, player.getLevel());
+    }
+
+    @Test
+    public void incrementLevel() {
+        for(int i = 1; i < 99; i++){
+            player.incrementLevel();
+        }
+        assertEquals(99, player.getLevel());
+        player.incrementLevel();
+        assertEquals(100, player.getLevel());
+        player.incrementLevel();
+        assertEquals(100, player.getLevel());
     }
 }
