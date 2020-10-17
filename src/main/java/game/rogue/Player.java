@@ -4,33 +4,33 @@ public class Player {
     private static final int MAX_LEVEL = 100;
     private static final int BASE_LEVEL_UP_AMOUNT = 100;
     private int level;
-    private int experiencePoints;
+    private int experience;
 
     public Player(){
         this.level = 1;
-        this.experiencePoints = 0;
+        this.experience = 0;
     }
 
     public int getLevel(){
         return this.level;
     }
 
-    public int getExperiencePoints() {
-        return this.experiencePoints;
+    public int getExperience() {
+        return this.experience;
     }
 
     /*If the amount is less than the needed XP for next level, simply increment XP by the amount.
       Else set XP to be equal to the leftover */
     public void gainExperience(int amount){
-        if (this.experiencePoints + amount < getExperienceToNextLevel()){
-            this.experiencePoints += amount;
+        if (this.experience + amount < getNextLevelTreshold()){
+            this.experience += amount;
         }else{
-            this.experiencePoints = amount - (getExperienceToNextLevel() - this.experiencePoints);
+            this.experience = amount - (getNextLevelTreshold() - this.experience);
             incrementLevel();
         }
     }
 
-    public int getExperienceToNextLevel(){
+    public int getNextLevelTreshold(){
         return BASE_LEVEL_UP_AMOUNT * this.level;
     }
 

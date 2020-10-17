@@ -10,16 +10,16 @@ public class PlayerTest {
     @Test
     public void gainExperience() {
         player.gainExperience(80);
-        assertEquals(80, player.getExperiencePoints());
+        assertEquals(80, player.getExperience());
         player.gainExperience(80);
-        assertEquals(60, player.getExperiencePoints());
+        assertEquals(60, player.getExperience());
     }
 
     @Test
     public void getExperienceToNextLevel() {
-        assertEquals(100, player.getExperienceToNextLevel());
+        assertEquals(100, player.getNextLevelTreshold());
         player.gainExperience(150);
-        assertEquals(200, player.getExperienceToNextLevel());
+        assertEquals(200, player.getNextLevelTreshold());
     }
 
     @Test
