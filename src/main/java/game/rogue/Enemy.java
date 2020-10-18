@@ -53,4 +53,13 @@ public class Enemy {
 		return currentHitPoints <= 0;
 	}
 	
+	public void move(int x, int y) {
+		if ((xPos + x) < 0 || (yPos + y) < 0) {
+			throw new IllegalArgumentException();
+		}
+		xPos += x;
+		yPos += y;
+	
+	}
+	
 }
