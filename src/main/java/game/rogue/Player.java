@@ -5,10 +5,22 @@ public class Player {
     private static final int BASE_LEVEL_UP_THRESHOLD = 100;
     private int level;
     private int experience;
+    private int currentHitPoints;
+    private PlayerClass playerClass;
 
-    public Player(){
+    public Player(PlayerClass playerClass){
+        this.playerClass = playerClass;
+        this.currentHitPoints = playerClass.getBaseHealth();
         this.level = 1;
         this.experience = 0;
+    }
+
+    public int getMaxHitPoints() {
+        return this.playerClass.getBaseHealth();
+    }
+
+    public int getCurrentHitPoints() {
+        return currentHitPoints;
     }
 
     public int getLevel(){

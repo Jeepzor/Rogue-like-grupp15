@@ -5,7 +5,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
-    Player player = new Player();
+    PlayerClass warrior = new Warrior();
+    Player player = new Player(warrior);
+
+    @Test
+    public void getHealth() {
+        assertEquals(20, player.getHealth());
+
+        PlayerClass wizard = new Wizard();
+        Player wizardPlayer = new Player(wizard);
+        assertEquals(10, wizardPlayer.getHealth());
+    }
 
     @Test
     public void gainExperience() {
