@@ -34,15 +34,15 @@ public class Player {
     /*If the amount is less than the needed XP for next level, simply increment XP by the amount.
       Else set XP to be equal to the leftover */
     public void gainExperience(int amount){
-        if (this.experience + amount < getNextLevelTreshold()){
+        if (this.experience + amount < getNextLevelThreshold()){
             this.experience += amount;
         }else{
-            this.experience = amount - (getNextLevelTreshold() - this.experience);
+            this.experience = amount - (getNextLevelThreshold() - this.experience);
             incrementLevel();
         }
     }
 
-    public int getNextLevelTreshold(){
+    public int getNextLevelThreshold(){
         return BASE_LEVEL_UP_THRESHOLD * this.level;
     }
 

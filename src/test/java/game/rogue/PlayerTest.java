@@ -10,11 +10,11 @@ public class PlayerTest {
 
     @Test
     public void getHealth() {
-        assertEquals(20, player.getHealth());
+        assertEquals(20, player.getMaxHitPoints());
 
         PlayerClass wizard = new Wizard();
         Player wizardPlayer = new Player(wizard);
-        assertEquals(10, wizardPlayer.getHealth());
+        assertEquals(10, wizardPlayer.getMaxHitPoints());
     }
 
     @Test
@@ -27,9 +27,9 @@ public class PlayerTest {
 
     @Test
     public void getExperienceToNextLevel() {
-        assertEquals(100, player.getNextLevelTreshold());
+        assertEquals(100, player.getNextLevelThreshold());
         player.gainExperience(150);
-        assertEquals(200, player.getNextLevelTreshold());
+        assertEquals(200, player.getNextLevelThreshold());
     }
 
     @Test
