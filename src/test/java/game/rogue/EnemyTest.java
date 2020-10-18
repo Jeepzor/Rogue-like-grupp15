@@ -2,9 +2,18 @@ package game.rogue;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class EnemyTest {
+	
+	private Enemy DEFAULT_ENEMY;
+	
+	@Before
+	public void createDefaultEnemy() {
+		DEFAULT_ENEMY = new Enemy(250, true, 15, 75);
+	}
+	
 	@Test
 	public void createEnemyWithValidValues() {
 		Enemy e = new Enemy(100, false, 20, 80);
@@ -34,4 +43,27 @@ public class EnemyTest {
 	public void creatingEnemyWithYPosBelow0ThrowsIAE() {
 		new Enemy(1000, false, 75, -1);
 	}
+	
+	@Test
+	public void damageTakenReducesHitPoints() {
+		DEFAULT_ENEMY.damage(15);
+		assertEquals(250, DEFAULT_ENEMY.getMaxHitPoints());
+		assertEquals(235, DEFAULT_ENEMY.getCurrentHitPoints());
+	}
+
+	@Test
+	public void damageTakenIsBelow0() {
+		final int currentHitPoints = DEFAULT_ENEMY.getCurrentHitPoints();
+		DEFAULT_ENEMY.damage(-1);
+		assertEquals(currentHitPoints, DEFAULT_ENEMY.getCurrentHitPoints());
+	}
+
+	@Test
+	public void damageTakenIsMoreThanCurrentHitPointsKillsEnemy() {
+		DEFAULT_ENEMY.damage(DEFAULT_ENEMY.getCurrentHitPoints() + 1);
+		assertTrue(DEFAULT_ENEMY.isDead());
+	}
+	
+
+
 }
