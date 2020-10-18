@@ -1,22 +1,21 @@
 package game.rogue;
 
-public class Enemy {
+public class Enemy extends Character{
 	private final int maxHitPoints;
 	private int currentHitPoints;
 	private boolean isAggressive;
 	private boolean isInCombat;
-	private int xPos;
-	private int yPos;
+
 
 	public Enemy(int maxHitPoints, boolean isAggressive, int xPos, int yPos) {
+		super(xPos, yPos);
 		if (maxHitPoints < 100 || maxHitPoints > 1000 || xPos < 0 || yPos < 0) {
 			throw new IllegalArgumentException();
 		}
 		this.maxHitPoints = maxHitPoints;
 		this.currentHitPoints = maxHitPoints;
 		this.isAggressive = isAggressive;
-		this.xPos = xPos;
-		this.yPos = yPos;
+
 	}
 
 	public int getMaxHitPoints() {
@@ -34,14 +33,6 @@ public class Enemy {
 	public boolean isInCombat() {
 		return isInCombat;
 	}
-
-	public int getXPos() {
-		return xPos;
-	}
-
-	public int getYPos() {
-		return yPos;
-	}
 	
 	public void damage(int amount) {
 		if (amount >= 0) {
@@ -52,14 +43,6 @@ public class Enemy {
 	public boolean isDead() {
 		return currentHitPoints <= 0;
 	}
-	
-	public void move(int x, int y) {
-		if ((xPos + x) < 0 || (yPos + y) < 0) {
-			throw new IllegalArgumentException();
-		}
-		xPos += x;
-		yPos += y;
-	
-	}
-	
+
+
 }

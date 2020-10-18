@@ -1,6 +1,6 @@
 package game.rogue;
 
-public class Player {
+public class Player extends Character{
     private static final int MAX_LEVEL = 100;
     private static final int BASE_LEVEL_UP_THRESHOLD = 100;
     private int level;
@@ -8,7 +8,8 @@ public class Player {
     private int currentHitPoints;
     private PlayerClass playerClass;
 
-    public Player(PlayerClass playerClass){
+    public Player(PlayerClass playerClass, int xPos, int yPos){
+        super(xPos, yPos);
         this.playerClass = playerClass;
         this.currentHitPoints = playerClass.getBaseHealth();
         this.level = 1;
