@@ -1,5 +1,4 @@
 package game.rogue;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -30,5 +29,17 @@ public class InventoryTest {
         bag.addItemToInventory(rock);
         bag.addItemToInventory(pebble);
         assertEquals("[Rock, Rock]", bag.toString());
+    }
+
+    @Test
+    public void removedItemAffectsWeight(){
+        Inventory bag = new Inventory();
+        GenericItem stick = new GenericItem(20);
+        bag.addItemToInventory(stick);
+        GenericItem cobble = new GenericItem(2000);
+        bag.addItemToInventory(cobble);
+        int weight = bag.getTotalWeight();
+        bag.removeItemFromInventory(stick);
+        assertEquals(2000, bag.getTotalWeight());
     }
 }
