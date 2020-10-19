@@ -1,17 +1,17 @@
 package game.rogue;
 
 public class Warrior extends PlayerClass{
-    private static final int BASE_HEALTH = 20;
-    private static final int BASE_MANA = 5;
+    private final int baseHealth = 20;
+    private final int baseMana = 5;
 
     @Override
-    public int getBaseHealth() {
-        return BASE_HEALTH;
+    public int getMaxHealth(int level) {
+        return this.baseHealth * level;
     }
 
     @Override
-    public int getBaseMana() {
-        return BASE_MANA;
+    public int getMaxMana(int level) {
+        return this.baseMana;
     }
 
     @Override
