@@ -52,6 +52,17 @@ public class Player extends Character{
         healToMaxHitPoints();
     }
 
+    public void takeDamage(int amount){
+        if (amount < 0){
+            throw new IllegalArgumentException("Damage can't be negative!");
+        }
+        this.currentHitPoints = Math.max(0, this.currentHitPoints - amount);
+    }
+
+    public boolean isAlive(){
+        return this.currentHitPoints > 0;
+    }
+
     public void healToMaxHitPoints(){
         this.currentHitPoints = playerClass.getMaxHealth(this.level);
     }

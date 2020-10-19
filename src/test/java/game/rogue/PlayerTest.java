@@ -23,7 +23,7 @@ public class PlayerTest {
         assertEquals(20, player.getMaxHitPoints());
 
         PlayerClass wizard = new Wizard();
-        Player wizardPlayer = new Player(wizard, 10, 10);
+        Player wizardPlayer = new Player(wizard, new Position(10, 10));
         assertEquals(10, wizardPlayer.getMaxHitPoints());
     }
 
@@ -37,9 +37,7 @@ public class PlayerTest {
 
     @Test
     public void takeNegativeDamage() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            player.takeDamage(-1);
-        });
+        assertThrows(IllegalArgumentException.class, () -> player.takeDamage(-1));
     }
 
     @Test
@@ -68,8 +66,10 @@ public class PlayerTest {
 
     @Test
     public void levelUp() {
+        player.takeDamage(5);
         player.levelUp();
         assertEquals(2, player.getLevel());
+        assertEquals(player.getMaxHitPoints(), player.getCurrentHitPoints());
     }
 
     @Test
