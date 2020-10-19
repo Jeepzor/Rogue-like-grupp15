@@ -11,7 +11,7 @@ public class Warrior extends PlayerClass{
 
     @Override
     public int getMaxMana(int level) {
-        return this.baseHealth * level;
+        return this.baseMana;
     }
 
     @Override

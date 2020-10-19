@@ -3,6 +3,7 @@ package game.rogue;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlayerTest {
     PlayerClass warrior = new Warrior();
@@ -15,6 +16,39 @@ public class PlayerTest {
         PlayerClass wizard = new Wizard();
         Player wizardPlayer = new Player(wizard, 10, 10);
         assertEquals(10, wizardPlayer.getMaxHitPoints());
+    }
+
+    @Test
+    public void getMana() {
+        assertEquals(20, player.getMaxHitPoints());
+
+        PlayerClass wizard = new Wizard();
+        Player wizardPlayer = new Player(wizard, 10, 10);
+        assertEquals(10, wizardPlayer.getMaxHitPoints());
+    }
+
+    @Test
+    public void takeDamage() {
+        assertEquals(20, player.getCurrentHitPoints());
+        player.takeDamage(5);
+        assertEquals(15, player.getCurrentHitPoints());
+        assertTrue(player.isAlive());
+    }
+
+    @Test
+    public void takeNegativeDamage() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            player.takeDamage(-1);
+        });
+    }
+
+    @Test
+    public void takeFatalDamage() {
+        assertEquals(20, player.getCurrentHitPoints());
+        assertTrue(player.isAlive());
+        player.takeDamage(25);
+        assertEquals(0, player.getCurrentHitPoints());
+        assertFalse(player.isAlive());
     }
 
     @Test
@@ -34,7 +68,7 @@ public class PlayerTest {
 
     @Test
     public void levelUp() {
-        player.gainExperience(150);
+        player.levelUp();
         assertEquals(2, player.getLevel());
     }
 
