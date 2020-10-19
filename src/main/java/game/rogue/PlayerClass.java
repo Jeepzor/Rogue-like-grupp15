@@ -4,9 +4,9 @@ public abstract class PlayerClass {
     private int baseHealth;
     private int baseMana;
 
-    public abstract int getBaseHealth(int level);
+    public abstract int getBaseHealth();
 
-    public abstract int getBaseMana(int level);
+    public abstract int getBaseMana();
 
     public boolean canEquipCloth(){
         return false;

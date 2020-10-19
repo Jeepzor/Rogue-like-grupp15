@@ -11,13 +11,13 @@ public class Player extends Character{
     public Player(PlayerClass playerClass, int xPos, int yPos){
         super(xPos, yPos);
         this.playerClass = playerClass;
+        this.currentHitPoints = playerClass.getBaseHealth();
         this.level = 1;
-        this.currentHitPoints = playerClass.getBaseHealth(this.level);
         this.experience = 0;
     }
 
     public int getMaxHitPoints() {
-        return this.playerClass.getBaseHealth(this.level);
+        return this.playerClass.getBaseHealth();
     }
 
     public int getCurrentHitPoints() {
@@ -39,7 +39,7 @@ public class Player extends Character{
             this.experience += amount;
         }else{
             this.experience = amount - (getNextLevelThreshold() - this.experience);
-            levelUp();
+            incrementLevel();
         }
     }
 
@@ -47,14 +47,6 @@ public class Player extends Character{
         return BASE_LEVEL_UP_THRESHOLD * this.level;
     }
 
-    public void levelUp(){
-        incrementLevel();
-        healToMaxHitPoints();
-    }
-
-    public void healToMaxHitPoints(){
-        this.currentHitPoints = playerClass.getBaseHealth(this.level);
-    }
     public void incrementLevel(){
         if (this.level < MAX_LEVEL){
             this.level += 1;
