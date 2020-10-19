@@ -19,12 +19,8 @@ public class Inventory {
         weight -= item.getWeight();
     }
 
-    public int getTotalWeight() {
-        int result = 0;
-        for(Item item : inventory){
-            result += item.getWeight();
-        }
-        return result;
+    public int getWeight() {
+        return weight;
     }
 
     public ArrayList<Item> getInventory() {
