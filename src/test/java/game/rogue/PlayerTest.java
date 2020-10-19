@@ -34,7 +34,7 @@ public class PlayerTest {
 
     @Test
     public void levelUp() {
-        player.gainExperience(150);
+        player.levelUp();
         assertEquals(2, player.getLevel());
     }
 
