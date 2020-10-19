@@ -11,7 +11,7 @@ public class EnemyTest {
 
 	@Before
 	public void createDefaultEnemy() {
-		DEFAULT_ENEMY = new Enemy(250, true, 15, 75);
+		DEFAULT_ENEMY = new Enemy(250, true, 50, 75);
 	}
 
 	@Test
@@ -81,6 +81,31 @@ public class EnemyTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void enemyMovesOutsideTheMapOnYThrowsIAE() {
 		DEFAULT_ENEMY.move(20, -(DEFAULT_ENEMY.getYPos() + 1));
+	}
+	
+	@Test
+	public void enemyDetectsPlayerWhenInArea() {
+		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(65, 90));
+	}
+
+	@Test
+	public void enemyDoesNotDetectPlayerWhenYNotInRange() {
+		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(45, 91));
+	}
+	
+	@Test
+	public void enemyDoesNotFindPlayerWhenXNotInRange() {
+		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(34, 80));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void hasPlayerInAreaThrowsIAEWhenXLessThan0() {
+		DEFAULT_ENEMY.hasPlayerInArea(-1, 70);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void hasPlayerInAreaThrowsIAEWhenYLessThan0() {
+		DEFAULT_ENEMY.hasPlayerInArea(50, -1);
 	}
 
 }

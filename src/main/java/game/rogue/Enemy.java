@@ -44,5 +44,16 @@ public class Enemy extends Character{
 		return currentHitPoints <= 0;
 	}
 
+	public boolean hasPlayerInArea(int playerXPos, int playerYPos) {
+		if (playerXPos < 0 || playerYPos < 0) {
+			throw new IllegalArgumentException();
+		}
+		return isInRange(getXPos(), playerXPos) && isInRange(getYPos(), playerYPos);
 
+	}
+
+	private boolean isInRange(int enemyPos, int playerPos) {
+		return enemyPos > playerPos ? enemyPos - playerPos <= 15 : playerPos - enemyPos <= 15;
+	}	
+	
 }
