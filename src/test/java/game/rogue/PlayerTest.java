@@ -6,14 +6,14 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
     PlayerClass warrior = new Warrior();
-    Player player = new Player(warrior, 10, 10);
+    Player player = new Player(warrior, new Position(10, 10));
 
     @Test
     public void getHealth() {
         assertEquals(20, player.getMaxHitPoints());
 
         PlayerClass wizard = new Wizard();
-        Player wizardPlayer = new Player(wizard, 10, 10);
+        Player wizardPlayer = new Player(wizard, new Position(10, 10));
         assertEquals(10, wizardPlayer.getMaxHitPoints());
     }
 

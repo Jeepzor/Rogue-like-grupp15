@@ -1,28 +1,24 @@
 package game.rogue;
 
 public abstract class Character {
-    private int xPos;
-    private int yPos;
-    public Character(int xPos, int yPos){
-        this.xPos = xPos;
-        this.yPos = yPos;
+    private Position position;
+    
+    public Character(Position position){
+        this.position = position;
     }
 
-    public int getXPos() {
-        return xPos;
+    public Position getPosition() {
+        return position;
     }
 
-    public int getYPos() {
-        return yPos;
-    }
-
-    public void move(int x, int y) {
-        if ((xPos + x) < 0 || (yPos + y) < 0) {
+    public void move(World world, int x, int y) {
+        if ((position.getX() + x) < 0 || (position.getY() + y) < 0) {
             throw new IllegalArgumentException();
         }
-        xPos += x;
-        yPos += y;
+        int currentX = position.getX();
+        int currentY = position.getY();
+        position.setX(currentX += x);
+        position.setY(currentY += y);
 
     }
-
 }

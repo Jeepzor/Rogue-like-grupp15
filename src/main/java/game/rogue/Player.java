@@ -8,8 +8,8 @@ public class Player extends Character{
     private int currentHitPoints;
     private PlayerClass playerClass;
 
-    public Player(PlayerClass playerClass, int xPos, int yPos){
-        super(xPos, yPos);
+    public Player(PlayerClass playerClass, Position position){
+        super(position);
         this.playerClass = playerClass;
         this.currentHitPoints = playerClass.getBaseHealth();
         this.level = 1;
