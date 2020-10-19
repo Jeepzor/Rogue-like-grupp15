@@ -72,40 +72,52 @@ public class EnemyTest {
 		assertEquals(currentXPos + 5, DEFAULT_ENEMY.getXPos());
 		assertEquals(currentYPos + 10, DEFAULT_ENEMY.getYPos());
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void enemyMovesOutsideTheMapOnXThrowsIAE() {
 		DEFAULT_ENEMY.move(-(DEFAULT_ENEMY.getXPos() + 1), 15);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void enemyMovesOutsideTheMapOnYThrowsIAE() {
 		DEFAULT_ENEMY.move(20, -(DEFAULT_ENEMY.getYPos() + 1));
 	}
-	
+
 	@Test
 	public void enemyDetectsPlayerWhenInArea() {
-		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(65, 90));
+		Player p = new Player(new Warrior(), 65, 90);
+		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(p));
 	}
 
 	@Test
 	public void enemyDoesNotDetectPlayerWhenYNotInRange() {
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(45, 91));
+		Player p = new Player(new Warrior(), 45, 91);
+		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(p));
 	}
-	
+
 	@Test
 	public void enemyDoesNotFindPlayerWhenXNotInRange() {
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(34, 80));
+	Player p = new Player(new Warrior(), 34, 80);
+		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(p));
 	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void hasPlayerInAreaThrowsIAEWhenXLessThan0() {
-		DEFAULT_ENEMY.hasPlayerInArea(-1, 70);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void hasPlayerInAreaThrowsIAEWhenYLessThan0() {
-		DEFAULT_ENEMY.hasPlayerInArea(50, -1);
+
+	@Test
+	public void enemyMovesRandomly() {
+		for (int i = 0; i < 1000; i++) {
+			Enemy e = new Enemy(500, true, 50, 75);
+			int currentX = e.getXPos();
+			int currentY = e.getYPos();
+
+			e.moveRandomly();
+			
+			boolean newXIsWithinRange = currentX > e.getXPos() ? currentX - e.getXPos() <= 30
+					: e.getXPos() - currentX <= 30;
+			boolean newYIsWithinRange = currentY > e.getYPos() ? currentY - e.getYPos() <= 30
+					: e.getYPos() - currentY <= 30;
+			
+			assertTrue(newXIsWithinRange);
+			assertTrue(newYIsWithinRange);
+		}
 	}
 
 }

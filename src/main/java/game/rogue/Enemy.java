@@ -1,11 +1,12 @@
 package game.rogue;
 
-public class Enemy extends Character{
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Enemy extends Character {
 	private final int maxHitPoints;
 	private int currentHitPoints;
 	private boolean isAggressive;
 	private boolean isInCombat;
-
 
 	public Enemy(int maxHitPoints, boolean isAggressive, int xPos, int yPos) {
 		super(xPos, yPos);
@@ -33,7 +34,7 @@ public class Enemy extends Character{
 	public boolean isInCombat() {
 		return isInCombat;
 	}
-	
+
 	public void damage(int amount) {
 		if (amount >= 0) {
 			currentHitPoints -= amount;
@@ -44,16 +45,22 @@ public class Enemy extends Character{
 		return currentHitPoints <= 0;
 	}
 
-	public boolean hasPlayerInArea(int playerXPos, int playerYPos) {
-		if (playerXPos < 0 || playerYPos < 0) {
-			throw new IllegalArgumentException();
-		}
-		return isInRange(getXPos(), playerXPos) && isInRange(getYPos(), playerYPos);
+	public boolean hasPlayerInArea(Player player) {
+		return isInRange(getXPos(), player.getXPos()) && isInRange(getYPos(), player.getYPos());
 
 	}
 
 	private boolean isInRange(int enemyPos, int playerPos) {
 		return enemyPos > playerPos ? enemyPos - playerPos <= 15 : playerPos - enemyPos <= 15;
-	}	
-	
+	}
+
+	public void moveRandomly() {
+		int randomX = getRandomIntWithinRange(-30, 30);
+		int randomY = getRandomIntWithinRange(-30, 30);
+		move(randomX, randomY);
+	}
+
+	private int getRandomIntWithinRange(int min, int max) {
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
+	}
 }
