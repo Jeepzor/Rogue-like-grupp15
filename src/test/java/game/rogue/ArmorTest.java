@@ -8,7 +8,7 @@ class ArmorTest {
 
     @Test
     public void constructorRecognizesInput(){
-        Armor armor = new Armor("plate");
+        Armor armor = new Armor("PlAte");
         assertEquals(10, armor.getDefense());
         assertEquals(200, armor.getWeight());
     }

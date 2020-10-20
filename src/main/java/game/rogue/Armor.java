@@ -2,7 +2,6 @@ package game.rogue;
 
 public class Armor extends Item{
     private final static int DEFAULT_WEIGHT = 200;
-    private int defense;
     private ArmorType armorType;
 
     public enum ArmorType{
@@ -19,36 +18,16 @@ public class Armor extends Item{
 
     public Armor(String type){
         super(DEFAULT_WEIGHT);
-        if(type.equalsIgnoreCase("plate")){
-            this.armorType = ArmorType.valueOf("Plate");
-            this.defense = armorType.getDefense();
-        }
-        else if(type.equalsIgnoreCase("cloth")){
-            this.armorType = ArmorType.valueOf("Cloth");
-            this.defense = armorType.getDefense();
-        }
-        else{
-            throw new IllegalArgumentException("invalid armor type");
-        }
+        this.armorType = ArmorType.valueOf(type.substring(0,1).toUpperCase() + type.substring(1).toLowerCase());
     }
     public Armor(String type, int customWeight){
         super(customWeight);
-        if(type.equalsIgnoreCase("plate")){
-            this.armorType = ArmorType.valueOf("Plate");
-            this.defense = armorType.getDefense();
-        }
-        else if(type.equalsIgnoreCase("cloth")){
-            this.armorType = ArmorType.valueOf("Cloth");
-            this.defense = armorType.getDefense();
-        }
-        else{
-            throw new IllegalArgumentException("invalid armor type");
-        }
+        this.armorType = ArmorType.valueOf(type.substring(0,1).toUpperCase() + type.substring(1).toLowerCase());
     }
 
 
     public int getDefense() {
-        return defense;
+        return armorType.getDefense();
     }
 
 }
