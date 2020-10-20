@@ -1,6 +1,7 @@
 package game.rogue;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
+import java.util.concurrent.*;
 
 public class Enemy extends Character {
 	private final int maxHitPoints;
@@ -10,7 +11,7 @@ public class Enemy extends Character {
 
 	public Enemy(int maxHitPoints, boolean isAggressive, Position position) {
 		super(position);
-		if (maxHitPoints < 100 || maxHitPoints > 1000 || position.getX() < 0 || position.getY() < 0) {
+		if (maxHitPoints < 100 || maxHitPoints > 1000) {
 			throw new IllegalArgumentException();
 		}
 		this.maxHitPoints = maxHitPoints;
@@ -41,31 +42,18 @@ public class Enemy extends Character {
 		}
 	}
 
-	public boolean isDead() {
-		return currentHitPoints <= 0;
+	public boolean isAlive() {
+		return currentHitPoints >= 0;
 	}
 
-	public boolean hasPlayerInArea(World world) {
-		Position playerPosition = world.getPlayer().getPosition();
-		return isInRange(getPosition().getX(), playerPosition.getX()) && isInRange(getPosition().getY(), playerPosition.getY()); 
-	}
-
-	private boolean isInRange(int enemyPos, int playerPos) {
-		return enemyPos > playerPos ? enemyPos - playerPos <= 15 : playerPos - enemyPos <= 15;
-	}
-	
 	@Override
 	public void move(World world, int x, int y) {
 		super.move(world, x, y);
-		if (hasPlayerInArea(world)) {
+		if (hasPlayerInArea(world) && isAggressive) {
 			startCombat(world.getPlayer());
-		};
+		}
 	}
 	
-	public void startCombat(Player player) {
-		isInCombat = true;
-	}
-
 	public void moveRandomly(World world) {
 		int randomX = getRandomIntWithinRange(-30, 30);
 		int randomY = getRandomIntWithinRange(-30, 30);
@@ -76,8 +64,23 @@ public class Enemy extends Character {
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 	
-	public void attack(Player player) {
+	public boolean hasPlayerInArea(World world) {
+		Position playerPosition = world.getPlayer().getPosition();
+		return isInRange(getPosition().getX(), playerPosition.getX())
+				&& isInRange(getPosition().getY(), playerPosition.getY());
+	}
+
+	private boolean isInRange(int enemyPos, int playerPos) {
+		return enemyPos > playerPos ? enemyPos - playerPos <= 15 : playerPos - enemyPos <= 15;
+	}
+
+	public void startCombat(Player player) {
+		isInCombat = true;
 		
+	}
+	
+	public void attack(Player player) {
+
 	}
 
 }
