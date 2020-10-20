@@ -6,6 +6,9 @@ public class Position {
 	
 
 	public Position(int x, int y) {
+		if (x < 0 || y < 0) {
+			throw new IllegalArgumentException();
+		}
 		this.x = x;
 		this.y = y;
 	}
@@ -18,11 +21,17 @@ public class Position {
 		return y;
 	}
 	
-	public void setX(int x) {
+	public void setX(int x, World world) {
+		if (x < 0 || x > world.getWidth()) {
+			throw new IllegalArgumentException();
+		}
 		this.x = x;
 	}
 	
-	public void setY(int y) {
+	public void setY(int y, World world) {
+		if (y < 0 || y > world.getHeight()) {
+			throw new IllegalArgumentException();
+		}
 		this.y = y;
 	}
 }

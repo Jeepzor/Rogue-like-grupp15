@@ -18,14 +18,14 @@ public abstract class Character {
 		int currentX = position.getX();
 		int currentY = position.getY();
 		if ((currentX + x) < 0) {
-			position.setX(0);
+			position.setX(0, world);
 		} else {
-			position.setX(currentX + x);
+			position.setX(currentX + x, world);
 		}
 		if ((currentY + y) < 0) {
-			position.setY(0);
+			position.setY(0, world);
 		} else {
-			position.setY(currentY + y);
+			position.setY(currentY + y, world);
 		}
 
 	}
