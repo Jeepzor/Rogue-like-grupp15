@@ -95,8 +95,8 @@ public class EnemyTest {
 	
 	@Test
 	public void enemyHealsFrom80To100PercentHitPoints() {
-		DEFAULT_ENEMY.damage((int)(0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
-		DEFAULT_ENEMY.heal((int)(0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.damage((int)(0.15 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.heal((int)(0.15 * DEFAULT_ENEMY.getMaxHitPoints()));
 		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == DEFAULT_ENEMY.getMaxHitPoints());
 	}
 	
@@ -107,12 +107,12 @@ public class EnemyTest {
 		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == (DEFAULT_ENEMY.getMaxHitPoints() * 0.9));
 	}
 	
-//	@Test
-//	public void enemyHealsAboveMaxHitPointsStopAtMaxHitPoints() {
-//		DEFAULT_ENEMY.damage((int)(0.9 * DEFAULT_ENEMY.getMaxHitPoints()));
-//		DEFAULT_ENEMY.heal((int)(0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
-//		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == DEFAULT_ENEMY.getMaxHitPoints());
-//	}
+	@Test
+	public void enemyHealsAboveMaxHitPointsStopAtMaxHitPoints() {
+		DEFAULT_ENEMY.damage((int)(0.1 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.heal((int)(0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
+		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == DEFAULT_ENEMY.getMaxHitPoints());
+	}
 
 	@Test
 	public void enemyMovesBy5XAnd10Y() {

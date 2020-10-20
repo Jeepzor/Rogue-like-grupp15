@@ -9,11 +9,11 @@ public class Enemy extends Character {
 	private boolean isInCombat;
 	private int strength;
 	private int level;
-	
+
 	public Enemy(int maxHitPoints, boolean isAggressive, Position position) {
 		this(maxHitPoints, isAggressive, position, 1);
 	}
-	
+
 	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int level) {
 		this(maxHitPoints, isAggressive, position, level * 2, level);
 	}
@@ -46,11 +46,11 @@ public class Enemy extends Character {
 	public boolean isInCombat() {
 		return isInCombat;
 	}
-	
+
 	public int getStrength() {
 		return strength;
 	}
-	
+
 	public int getLevel() {
 		return level;
 	}
@@ -60,9 +60,13 @@ public class Enemy extends Character {
 			currentHitPoints -= amount;
 		}
 	}
-	
+
 	public void heal(int amount) {
-		currentHitPoints += amount;
+		if ((currentHitPoints + amount) > maxHitPoints) {
+			currentHitPoints = maxHitPoints;
+		} else {
+			currentHitPoints += amount;
+		}
 	}
 
 	public boolean isAlive() {
@@ -76,7 +80,7 @@ public class Enemy extends Character {
 			startCombat(world.getPlayer());
 		}
 	}
-	
+
 	public void moveRandomly(World world) {
 		int randomX = getRandomIntWithinRange(-30, 30);
 		int randomY = getRandomIntWithinRange(-30, 30);
@@ -86,7 +90,7 @@ public class Enemy extends Character {
 	private int getRandomIntWithinRange(int min, int max) {
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
-	
+
 	public boolean hasPlayerInArea(World world) {
 		Position playerPosition = world.getPlayer().getPosition();
 		return isInRange(getPosition().getX(), playerPosition.getX())
@@ -97,10 +101,10 @@ public class Enemy extends Character {
 		return enemyPos > playerPos ? enemyPos - playerPos <= 15 : playerPos - enemyPos <= 15;
 	}
 
-	public void startCombat(Player player) {
+	private void startCombat(Player player) {
 		isInCombat = true;
 	}
-	
+
 	public void attack(Player player) {
 		player.takeDamage(strength);
 	}
