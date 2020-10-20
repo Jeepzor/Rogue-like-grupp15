@@ -3,24 +3,26 @@ package game.rogue;
 import java.util.ArrayList;
 
 public class Inventory {
-    private  ArrayList<Item> inventory;
-    private int weight;
+    private ArrayList<Item> inventory;
 
-    public Inventory(){
+    public Inventory() {
         inventory = new ArrayList<>();
     }
 
-    public void addItemToInventory(Item item){
+    public void addItemToInventory(Item item) {
         inventory.add(item);
-        weight += item.getWeight();
-    }
-    public void removeItemFromInventory(Item item){
-        inventory.remove(item);
-        weight -= item.getWeight();
     }
 
-    public int getWeight() {
-        return weight;
+    public void removeItemFromInventory(Item item) {
+        inventory.remove(item);
+    }
+
+    public int getTotalWeight() {
+        int result = 0;
+        for (Item item : inventory) {
+            result += item.getWeight();
+        }
+        return result;
     }
 
     public ArrayList<Item> getInventory() {
@@ -28,8 +30,10 @@ public class Inventory {
         inventoryCopy.addAll(inventory);
         return inventoryCopy;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return inventory.toString();
     }
 }
+

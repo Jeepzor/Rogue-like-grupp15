@@ -18,7 +18,7 @@ public class InventoryTest {
         GenericItem pebble = new GenericItem();
         bag.addItemToInventory(rock);
         bag.addItemToInventory(pebble);
-        assertEquals(400, bag.getWeight());
+        assertEquals(400, bag.getTotalWeight());
     }
 
     @Test
@@ -38,8 +38,8 @@ public class InventoryTest {
         bag.addItemToInventory(stick);
         GenericItem cobble = new GenericItem(2000);
         bag.addItemToInventory(cobble);
-        int weight = bag.getWeight();
+        int weight = bag.getTotalWeight();
         bag.removeItemFromInventory(stick);
-        assertEquals(2000, bag.getWeight());
+        assertEquals(2000, bag.getTotalWeight());
     }
 }
