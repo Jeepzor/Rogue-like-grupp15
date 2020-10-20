@@ -1,6 +1,5 @@
 package game.rogue;
 
-import java.util.Random;
 import java.util.concurrent.*;
 
 public class Enemy extends Character {
@@ -8,15 +7,27 @@ public class Enemy extends Character {
 	private int currentHitPoints;
 	private boolean isAggressive;
 	private boolean isInCombat;
-
+	private int strength;
+	private int level;
+	
 	public Enemy(int maxHitPoints, boolean isAggressive, Position position) {
+		this(maxHitPoints, isAggressive, position, 1);
+	}
+	
+	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int level) {
+		this(maxHitPoints, isAggressive, position, level * 2, level);
+	}
+
+	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int strength, int level) {
 		super(position);
-		if (maxHitPoints < 100 || maxHitPoints > 1000) {
+		if (maxHitPoints < 100 || maxHitPoints > 1000 || strength < 0 || strength > 100) {
 			throw new IllegalArgumentException();
 		}
 		this.maxHitPoints = maxHitPoints;
 		this.currentHitPoints = maxHitPoints;
 		this.isAggressive = isAggressive;
+		this.strength = strength;
+		this.level = level;
 
 	}
 
@@ -35,11 +46,23 @@ public class Enemy extends Character {
 	public boolean isInCombat() {
 		return isInCombat;
 	}
+	
+	public int getStrength() {
+		return strength;
+	}
+	
+	public int getLevel() {
+		return level;
+	}
 
 	public void damage(int amount) {
 		if (amount >= 0) {
 			currentHitPoints -= amount;
 		}
+	}
+	
+	public void heal(int amount) {
+		currentHitPoints += amount;
 	}
 
 	public boolean isAlive() {
@@ -76,11 +99,10 @@ public class Enemy extends Character {
 
 	public void startCombat(Player player) {
 		isInCombat = true;
-		
 	}
 	
 	public void attack(Player player) {
-
+		player.takeDamage(strength);
 	}
 
 }
