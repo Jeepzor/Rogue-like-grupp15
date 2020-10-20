@@ -1,18 +1,19 @@
 package game.rogue;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class WorldTest {
 
 	private Player DEFAULT_PLAYER;
 	private HashMap<Position, Enemy> DEFAULT_ENEMY_MAP;
 
-	@Before
+	@BeforeEach
 	public void createDefaultObjects() {
 		DEFAULT_PLAYER = new Player(new Warrior(), new Position(50, 100));
 		DEFAULT_ENEMY_MAP = new HashMap<Position, Enemy>();
