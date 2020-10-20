@@ -1,9 +1,8 @@
 package game.rogue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
     PlayerClass warrior = new Warrior();
@@ -25,6 +24,20 @@ public class PlayerTest {
         PlayerClass wizard = new Wizard();
         Player wizardPlayer = new Player(wizard, new Position(10, 10));
         assertEquals(10, wizardPlayer.getMaxHitPoints());
+    }
+
+    @Test
+    public void testWizardArmor(){
+        PlayerClass wizard = new Wizard();
+        Player wizardPlayer = new Player(wizard, new Position(10, 10));
+        assertTrue(wizardPlayer.canEquipCloth());
+        assertFalse(wizardPlayer.canEquipPlate());
+    }
+
+    @Test
+    public void testWarriorArmor(){
+        assertTrue(player.canEquipCloth());
+        assertTrue(player.canEquipPlate());
     }
 
     @Test
