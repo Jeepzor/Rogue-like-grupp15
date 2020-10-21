@@ -4,6 +4,10 @@ public class Warrior extends PlayerClass{
     private final int baseHealth = 20;
     private final int baseMana = 5;
 
+    public Warrior(){
+
+    }
+
     @Override
     public int getMaxHealth(int level) {
         return this.baseHealth * level;
@@ -28,4 +32,14 @@ public class Warrior extends PlayerClass{
     public String toString(){
         return "Class: Warrior";
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Warrior){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

@@ -62,7 +62,7 @@ public class Player extends Character{
     }
 
     public void changeClass(PlayerClass newClass){
-        if (newClass == this.playerClass){
+        if (newClass.equals(this.playerClass)){
             throw new IllegalArgumentException("New class can't be the same as the current class");
         }
         if (CLASS_CHANGE_COST >= getLevel()){

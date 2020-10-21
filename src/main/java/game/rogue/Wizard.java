@@ -22,4 +22,13 @@ public class Wizard extends PlayerClass{
     public String toString(){
         return "Class: Wizard";
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Wizard){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
