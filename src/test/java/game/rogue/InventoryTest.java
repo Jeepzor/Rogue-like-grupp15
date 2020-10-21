@@ -7,7 +7,7 @@ public class InventoryTest {
     @Test
     public void newInventoryIsEmpty() {
         Inventory bag = new Inventory();
-        assertEquals("[]", bag.toString());
+        assertEquals("[]", bag.getItemsInBag());
     }
 
     @Test
@@ -21,13 +21,13 @@ public class InventoryTest {
     }
 
     @Test
-    public void inventoryToStringReturnsItems(){
+    public void inventoryContentsReturnsItems(){
         Inventory bag = new Inventory();
         GenericItem rock = new GenericItem();
         GenericItem pebble = new GenericItem();
         bag.addItemToInventory(rock);
         bag.addItemToInventory(pebble);
-        assertEquals("[Rock, Rock]", bag.toString());
+        assertEquals("[Rock, Rock]", bag.getItemsInBag());
     }
 
     @Test
@@ -37,8 +37,18 @@ public class InventoryTest {
         bag.addItemToInventory(stick);
         GenericItem cobble = new GenericItem(2000);
         bag.addItemToInventory(cobble);
-        int weight = bag.getTotalWeight();
         bag.removeItemFromInventory(stick);
         assertEquals(2000, bag.getTotalWeight());
     }
+
+    @Test
+    public void equipItemFromBag(){
+        Inventory inventory = new Inventory();
+        Item plateArmor = new Armor("Plate");
+        inventory.addItemToInventory(plateArmor);
+        inventory.equipItem(plateArmor);
+        assertEquals("[Armor]", inventory.getEquippedItems());
+    }
+
+    //här ska jag också göra test som kastar undantag för både equip och unequip.
 }

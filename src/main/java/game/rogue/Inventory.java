@@ -3,37 +3,60 @@ package game.rogue;
 import java.util.ArrayList;
 
 public class Inventory {
-    private ArrayList<Item> inventory;
+    private ArrayList<Item> bag;
+    private ArrayList<Item> equippedItems;
 
     public Inventory() {
-        inventory = new ArrayList<>();
+        bag = new ArrayList<>();
+        equippedItems = new ArrayList<>();
     }
 
     public void addItemToInventory(Item item) {
-        inventory.add(item);
+        bag.add(item);
     }
 
     public void removeItemFromInventory(Item item) {
-        inventory.remove(item);
+        bag.remove(item);
     }
+    public void equipItem(Item item){
+        if (bag.contains(item)){
+            bag.remove(item);
+            equippedItems.add(item);
+        }
+        else{
+            throw new IllegalStateException("This item is not in player's inventory.");
+        }
+    }
+    public void unEquipItem(Item item){
+        if(equippedItems.contains(item)){
+            equippedItems.remove(item);
+            bag.add(item);
+        }else{
+            throw new IllegalStateException("That item is not equipped.");
+        }
+    }
+
 
     public int getTotalWeight() {
         int result = 0;
-        for (Item item : inventory) {
+        for (Item item : bag) {
             result += item.getWeight();
         }
         return result;
     }
 
-    public ArrayList<Item> getInventory() {
+    public ArrayList<Item> getBag() {
         ArrayList<Item> inventoryCopy = new ArrayList<>();
-        inventoryCopy.addAll(inventory);
+        inventoryCopy.addAll(bag);
         return inventoryCopy;
     }
 
-    @Override
-    public String toString() {
-        return inventory.toString();
+    public String getItemsInBag() {
+        return bag.toString();
+    }
+
+    public String getEquippedItems(){
+        return equippedItems.toString();
     }
 }
 

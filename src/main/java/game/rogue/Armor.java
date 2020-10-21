@@ -46,5 +46,9 @@ public class Armor extends Item{
             return false;
         }
     }
+    @Override
+    public String toString(){
+        return "Armor";
+    }
 
 }
