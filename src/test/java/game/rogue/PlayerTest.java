@@ -96,4 +96,18 @@ public class PlayerTest {
         player.incrementLevel();
         assertEquals(100, player.getLevel());
     }
+
+    @Test
+    public void changeClass() {
+        PlayerClass wizard = new Wizard();
+        PlayerClass wizard2 = new Wizard();
+        assertThrows(IllegalStateException.class, () -> player.changeClass(wizard));
+        for(int i = 1; i < 10; i++){
+            player.incrementLevel();
+        }
+        assertEquals(10, player.getLevel());
+        player.changeClass(wizard);
+        assertEquals(5, player.getLevel());
+        assertThrows(IllegalArgumentException.class, () -> player.changeClass(wizard));
+    }
 }

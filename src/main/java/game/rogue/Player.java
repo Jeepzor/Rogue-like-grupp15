@@ -3,6 +3,7 @@ package game.rogue;
 public class Player extends Character{
     private static final int MAX_LEVEL = 100;
     private static final int BASE_LEVEL_UP_THRESHOLD = 100;
+    private static final int CLASS_CHANGE_COST = 5;
     private int level;
     private int experience;
     private int currentHitPoints;
@@ -60,6 +61,21 @@ public class Player extends Character{
         healToMaxHitPoints();
     }
 
+    public void changeClass(PlayerClass newClass){
+        if (newClass == this.playerClass){
+            throw new IllegalArgumentException("New class can't be the same as the current class");
+        }
+        if (CLASS_CHANGE_COST >= getLevel()){
+            throw new IllegalStateException("Too low level to change class!");
+        }
+        setNewClass(newClass);
+        setLevel(getLevel() - CLASS_CHANGE_COST);
+    }
+
+    public void setNewClass(PlayerClass newClass){
+        this.playerClass = newClass;
+    }
+
     public void takeDamage(int amount){
         if (amount < 0){
             throw new IllegalArgumentException("Damage can't be negative!");
@@ -71,8 +87,12 @@ public class Player extends Character{
         return this.currentHitPoints > 0;
     }
 
-    public void healToMaxHitPoints(){
+    private void healToMaxHitPoints(){
         this.currentHitPoints = playerClass.getMaxHealth(this.level);
+    }
+
+    private void setLevel(int level){
+        this.level = level;
     }
 
     public void incrementLevel(){
