@@ -10,17 +10,15 @@ public class Enemy extends Character {
 	private int strength;
 	private int level;
 
-	public Enemy(int maxHitPoints, boolean isAggressive, Position position) {
-		this(maxHitPoints, isAggressive, position, 1);
-	}
-
-	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int level) {
-		this(maxHitPoints, isAggressive, position, level * 2, level);
-	}
-
 	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int strength, int level) {
 		super(position);
-		if (maxHitPoints < 100 || maxHitPoints > 1000 || strength < 0 || strength > 100) {
+		if (maxHitPoints < 10 || maxHitPoints > 1000) {
+			throw new IllegalArgumentException();
+		}
+		if (strength < 1 || strength > 200) {
+			throw new IllegalArgumentException();
+		}
+		if (level < 1 || level > 100) {
 			throw new IllegalArgumentException();
 		}
 		this.maxHitPoints = maxHitPoints;

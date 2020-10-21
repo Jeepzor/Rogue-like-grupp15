@@ -13,7 +13,7 @@ public class EnemyTest {
 
 	@Before
 	public void setUp() {
-		DEFAULT_ENEMY = new Enemy(250, true, new Position(50, 75));
+		DEFAULT_ENEMY = new Enemy(250, true, new Position(50, 75), 5, 2);
 		DEFAULT_PLAYER = new Player(new Warrior(), new Position(65, 90));
 		DEFAULT_WORLD = new World(5000, 7500, DEFAULT_PLAYER);
 	}
@@ -25,21 +25,21 @@ public class EnemyTest {
 		assertTrue(DEFAULT_ENEMY.isAggressive());
 		assertEquals(50, DEFAULT_ENEMY.getPosition().getX());
 		assertEquals(75, DEFAULT_ENEMY.getPosition().getY());
-		assertEquals(2, DEFAULT_ENEMY.getStrength());
-		assertEquals(1, DEFAULT_ENEMY.getLevel());
+		assertEquals(5, DEFAULT_ENEMY.getStrength());
+		assertEquals(2, DEFAULT_ENEMY.getLevel());
 	}
 
 	@Test
-	public void creatingEnemyWithLessThan100HitPointsThrowsIAE() {
+	public void creatingEnemyWithLessThan10HPThrowsIAE() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new Enemy(99, true, new Position(40, 60));
+			new Enemy(9, true, new Position(40, 60), 6, 3);
 		});
 	}
 
 	@Test
-	public void creatingEnemyWithMoreThan1000HitPointsThrowsIAE() {
+	public void creatingEnemyWithMoreThan1000HPThrowsIAE() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new Enemy(1001, false, new Position(25, 10));
+			new Enemy(1001, false, new Position(25, 10), 1, 6);
 		});
 
 	}
@@ -47,14 +47,14 @@ public class EnemyTest {
 	@Test
 	public void creatingEnemyWithNullPositionThrowsIAE() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new Enemy(500, true, null);
+			new Enemy(500, true, null, 5, 10);
 		});
 	}
 
 	@Test
 	public void creatingEnemyWithXPosBelow0ThrowsIAE() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new Enemy(101, true, new Position(-1, 95));
+			new Enemy(101, true, new Position(-1, 95), 10, 5);
 		});
 
 	}
@@ -62,12 +62,40 @@ public class EnemyTest {
 	@Test
 	public void creatingEnemyWithYPosBelow0ThrowsIAE() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new Enemy(1000, false, new Position(75, -1));
+			new Enemy(1000, false, new Position(75, -1), 15, 25);
 		});
 	}
 
 	@Test
-	public void damageTakenReducesHitPoints() {
+	public void creatingEnemyWithLessTHan1StrengthThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new Enemy(250, true, new Position(80, 20), 0, 1);
+		});
+	}
+
+	@Test
+	public void creatingEnemyWithMoreTHan200StrengthThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new Enemy(250, true, new Position(80, 20), 201, 3);
+		});
+	}
+
+	@Test
+	public void creatingEnemyWithLessTHanLevel1ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new Enemy(250, true, new Position(80, 20), 100, 0);
+		});
+	}
+
+	@Test
+	public void creatingEnemyWithMoreTHanLevel100ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new Enemy(250, true, new Position(80, 20), 50, 101);
+		});
+	}
+
+	@Test
+	public void damageTakenReducesHP() {
 		DEFAULT_ENEMY.damage(15);
 		assertEquals(250, DEFAULT_ENEMY.getMaxHitPoints());
 		assertEquals(235, DEFAULT_ENEMY.getCurrentHitPoints());
@@ -88,29 +116,29 @@ public class EnemyTest {
 	}
 
 	@Test
-	public void damageTakenIsMoreThanCurrentHitPointsKillsEnemy() {
+	public void damageTakenIsMoreThanCurrentHPKillsEnemy() {
 		DEFAULT_ENEMY.damage(DEFAULT_ENEMY.getCurrentHitPoints() + 1);
 		assertFalse(DEFAULT_ENEMY.isAlive());
 	}
-	
+
 	@Test
-	public void enemyHealsFrom80To100PercentHitPoints() {
-		DEFAULT_ENEMY.damage((int)(0.15 * DEFAULT_ENEMY.getMaxHitPoints()));
-		DEFAULT_ENEMY.heal((int)(0.15 * DEFAULT_ENEMY.getMaxHitPoints()));
+	public void enemyHealsFrom80To100PercentHP() {
+		DEFAULT_ENEMY.damage((int) (0.15 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.heal((int) (0.15 * DEFAULT_ENEMY.getMaxHitPoints()));
 		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == DEFAULT_ENEMY.getMaxHitPoints());
 	}
-	
+
 	@Test
-	public void enemyHealsFrom80To90Percent() {
-		DEFAULT_ENEMY.damage((int)(0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
-		DEFAULT_ENEMY.heal((int)(0.1 * DEFAULT_ENEMY.getMaxHitPoints()));
+	public void enemyHealsFrom80To90PercentHP() {
+		DEFAULT_ENEMY.damage((int) (0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.heal((int) (0.1 * DEFAULT_ENEMY.getMaxHitPoints()));
 		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == (DEFAULT_ENEMY.getMaxHitPoints() * 0.9));
 	}
-	
+
 	@Test
 	public void enemyHealsAboveMaxHitPointsStopAtMaxHitPoints() {
-		DEFAULT_ENEMY.damage((int)(0.1 * DEFAULT_ENEMY.getMaxHitPoints()));
-		DEFAULT_ENEMY.heal((int)(0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.damage((int) (0.1 * DEFAULT_ENEMY.getMaxHitPoints()));
+		DEFAULT_ENEMY.heal((int) (0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
 		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == DEFAULT_ENEMY.getMaxHitPoints());
 	}
 
@@ -157,7 +185,7 @@ public class EnemyTest {
 	@Test
 	public void enemyMovesRandomly() {
 		for (int i = 0; i < 1000; i++) {
-			Enemy e = new Enemy(500, true, new Position(50, 75));
+			Enemy e = new Enemy(500, true, new Position(50, 75), 25, 30);
 			int currentX = e.getPosition().getX();
 			int currentY = e.getPosition().getY();
 
@@ -214,25 +242,24 @@ public class EnemyTest {
 		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(w));
 		assertTrue(DEFAULT_ENEMY.isInCombat());
 	}
-	
+
 	@Test
 	public void nonAggressiveEnemyDoesNotAttackPlayerWhenMovesIntoRange() {
 		World w = new World(5000, 7500, new Player(new Warrior(), new Position(100, 100)));
-		Enemy e = new Enemy(300, false, new Position(50, 50));
+		Enemy e = new Enemy(300, false, new Position(50, 50), 1, 3);
 		assertFalse(e.hasPlayerInArea(w));
 		assertFalse(e.isInCombat());
-		
+
 		e.move(w, 45, 40);
 		assertTrue(e.hasPlayerInArea(w));
 		assertFalse(e.isInCombat());
 	}
-	
+
 	@Test
-	public void attackPlayerReducesItsHitPoints() {
-		final int playersCurrentHitPoints = DEFAULT_PLAYER.getCurrentHitPoints();
+	public void attackPlayerReducesItsHP() {
+		final int playersCurrentHP = DEFAULT_PLAYER.getCurrentHitPoints();
 
 		DEFAULT_ENEMY.attack(DEFAULT_PLAYER);
-		assertEquals(playersCurrentHitPoints - DEFAULT_ENEMY.getStrength(), DEFAULT_PLAYER.getCurrentHitPoints());
+		assertEquals(playersCurrentHP - DEFAULT_ENEMY.getStrength(), DEFAULT_PLAYER.getCurrentHitPoints());
 	}
-
 }
