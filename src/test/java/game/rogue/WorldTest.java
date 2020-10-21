@@ -1,8 +1,7 @@
 package game.rogue;
 
 import static org.junit.Assert.*;
-
-import java.util.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,25 +9,75 @@ import org.junit.Test;
 public class WorldTest {
 
 	private Player DEFAULT_PLAYER;
-	private HashMap<Position, Enemy> DEFAULT_ENEMY_MAP;
-
+	private World DEFAULT_WORLD;
+	private Enemy DEFAULT_ENEMY;
+		
 	@Before
-	public void createDefaultObjects() {
+	public void setUp() {
 		DEFAULT_PLAYER = new Player(new Warrior(), new Position(50, 100));
-		DEFAULT_ENEMY_MAP = new HashMap<Position, Enemy>();
-		DEFAULT_ENEMY_MAP.put(new Position(50, 75), new Enemy(600, true, new Position(50, 75)));
-		DEFAULT_ENEMY_MAP.put(new Position(5, 150), new Enemy(500, true, new Position(5, 150)));
-		DEFAULT_ENEMY_MAP.put(new Position(10, 40), new Enemy(400, true, new Position(10, 40)));
-		DEFAULT_ENEMY_MAP.put(new Position(2, 250), new Enemy(300, false, new Position(2, 250)));
-		DEFAULT_ENEMY_MAP.put(new Position(300, 55), new Enemy(200, true, new Position(300, 55)));
-		DEFAULT_ENEMY_MAP.put(new Position(120, 40), new Enemy(100, false, new Position(120, 40)));
+		DEFAULT_WORLD = new World(5000, 7500, DEFAULT_PLAYER);
+		DEFAULT_ENEMY = new Enemy(250, true, new Position(30, 80), 5, 2);
 	}
 
 	@Test
 	public void constructorCreatesMap() {
-		World w = new World(5000, 7500, DEFAULT_PLAYER);
-		assertEquals(5000, w.getHeight());
-		assertEquals(7500, w.getWidth());
-		assertEquals(DEFAULT_PLAYER, w.getPlayer());
+		assertEquals(5000, DEFAULT_WORLD.getHeight());
+		assertEquals(7500, DEFAULT_WORLD.getWidth());
+		assertEquals(DEFAULT_PLAYER, DEFAULT_WORLD.getPlayer());
+	}
+	
+	@Test
+	public void widthLessThan0ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new World(-1, 5000, DEFAULT_PLAYER);
+		});
+	}
+	
+	@Test
+	public void widthMoreThan50000ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new World(50001, 2500, DEFAULT_PLAYER);
+		});
+	}
+	
+	@Test
+	public void heightLessThan0ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new World(5000, -1, DEFAULT_PLAYER);
+		});		
+	}
+	
+	@Test
+	public void heightMoreThan50000ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new World(1000, 50001, DEFAULT_PLAYER);
+		});		
+	}
+	
+	@Test
+	public void nullPlayerhrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			new World(1000, 2000, null);
+		});		
+	}
+	
+	@Test
+	public void addNewEnemy() {
+		assertEquals(0, DEFAULT_WORLD.getEnemies().size());
+		DEFAULT_WORLD.addEnemy(DEFAULT_ENEMY);
+		assertEquals(1, DEFAULT_WORLD.getEnemies().size());
+	}
+	
+	@Test
+	public void removeEnemy() {
+		Enemy e = new Enemy(100, true, new Position(10, 10), 2, 5);
+		
+		DEFAULT_WORLD.addEnemy(DEFAULT_ENEMY);
+		DEFAULT_WORLD.addEnemy(e);
+		assertEquals(2, DEFAULT_WORLD.getEnemies().size());
+		
+		DEFAULT_WORLD.removeEnemy(e);
+		assertEquals(1, DEFAULT_WORLD.getEnemies().size());
+		assertTrue(DEFAULT_WORLD.getEnemies().containsValue(DEFAULT_ENEMY));
 	}
 }
