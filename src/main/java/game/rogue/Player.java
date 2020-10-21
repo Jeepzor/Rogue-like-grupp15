@@ -20,6 +20,14 @@ public class Player extends Character{
         return this.playerClass.getMaxHealth(this.level);
     }
 
+    public boolean canEquipCloth(){
+        return playerClass.canEquipCloth();
+    }
+
+    public boolean canEquipPlate(){
+        return playerClass.canEquipPlate();
+    }
+
     public int getCurrentHitPoints() {
         return currentHitPoints;
     }

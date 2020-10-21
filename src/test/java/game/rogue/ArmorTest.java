@@ -8,7 +8,7 @@ class ArmorTest {
 
     @Test
     public void constructorRecognizesInput(){
-        Armor armor = new Armor("plate");
+        Armor armor = new Armor("PlAte");
         assertEquals(10, armor.getDefense());
         assertEquals(200, armor.getWeight());
     }
@@ -31,6 +31,18 @@ class ArmorTest {
     public void armorWithSpecificWeight(){
         Armor heavyArmor = new Armor("plate", 950);
         assertEquals(950, heavyArmor.getWeight());
+    }
+
+    @Test
+    public void plateArmorisPlate(){
+        Armor heavyArmor = new Armor("Plate");
+        assertTrue(heavyArmor.isPlate());
+    }
+
+    @Test
+    public void clothArmorisCloth(){
+        Armor shirt = new Armor("Cloth");
+        assertTrue(shirt.isCloth());
     }
 
 

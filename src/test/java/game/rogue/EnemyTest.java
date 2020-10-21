@@ -1,7 +1,7 @@
 package game.rogue;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ public class EnemyTest {
 	private Player DEFAULT_PLAYER;
 	private World DEFAULT_WORLD;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		DEFAULT_ENEMY = new Enemy(250, true, new Position(50, 75), 5, 2);
 		DEFAULT_PLAYER = new Player(new Warrior(), new Position(65, 90));
