@@ -30,4 +30,21 @@ public class Armor extends Item{
         return armorType.getDefense();
     }
 
+    public boolean isPlate(){
+        if (armorType.name().equalsIgnoreCase("Plate")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean isCloth(){
+        if(armorType.name().equalsIgnoreCase("Cloth")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }
