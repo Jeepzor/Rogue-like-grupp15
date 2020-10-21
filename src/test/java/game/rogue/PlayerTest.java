@@ -63,11 +63,51 @@ public class PlayerTest {
     }
 
     @Test
+    public void heal(){
+        player.takeDamage(5);
+        assertEquals(15, player.getCurrentHitPoints());
+        player.heal(5);
+        assertEquals(20, player.getCurrentHitPoints());
+    }
+
+    @Test
+    public void healAboveMaxLife(){
+        player.takeDamage(5);
+        assertEquals(15, player.getCurrentHitPoints());
+        player.heal(10);
+        assertEquals(20, player.getCurrentHitPoints());
+    }
+
+    @Test
+    public void negativeHeal(){
+        assertThrows(IllegalArgumentException.class, () -> player.heal(-1));
+    }
+
+    @Test
+    public void zeroHeal(){
+        assertThrows(IllegalArgumentException.class, () -> player.heal(0));
+    }
+
+    @Test
     public void gainExperience() {
         player.gainExperience(80);
         assertEquals(80, player.getExperience());
-        player.gainExperience(80);
+    }
+
+    @Test
+    public void gainMoreExperienceThanNextLevel(){
+        player.gainExperience(160);
         assertEquals(60, player.getExperience());
+    }
+
+    @Test
+    public void gainZeroExperience() {
+        assertThrows(IllegalArgumentException.class, () -> player.gainExperience(0));
+    }
+
+    @Test
+    public void gainNegativeExperience() {
+        assertThrows(IllegalArgumentException.class, () -> player.gainExperience(-1));
     }
 
     @Test

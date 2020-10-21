@@ -44,6 +44,9 @@ public class Player extends Character{
     /*If the amount is less than the needed XP for next level, simply increment XP by the amount.
       Else set XP to be equal to the leftover */
     public void gainExperience(int amount){
+        if (amount <= 0){
+            throw new IllegalArgumentException("Experience amount has to be above 0!");
+        }
         if (this.experience + amount < getNextLevelThreshold()){
             this.experience += amount;
         }else{
@@ -81,6 +84,17 @@ public class Player extends Character{
             throw new IllegalArgumentException("Damage can't be negative!");
         }
         this.currentHitPoints = Math.max(0, this.currentHitPoints - amount);
+    }
+
+    public void heal(int amount){
+        if (amount <= 0){
+            throw new IllegalArgumentException("Healing amount has to be above 0!");
+        }
+
+        if (this.currentHitPoints == getMaxHitPoints()){
+            throw new IllegalStateException("Player is already at full health");
+        }
+        this.currentHitPoints = Math.min(this.currentHitPoints + amount, getMaxHitPoints());
     }
 
     public boolean isAlive(){
