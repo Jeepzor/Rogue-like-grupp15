@@ -34,15 +34,17 @@ class ArmorTest {
     }
 
     @Test
-    public void plateArmorisPlate(){
+    public void plateArmorIsPlateAndNotCloth(){
         Armor heavyArmor = new Armor("Plate");
         assertTrue(heavyArmor.isPlate());
+        assertFalse(heavyArmor.isCloth());
     }
 
     @Test
-    public void clothArmorisCloth(){
+    public void clothArmorIsClothAndNotPlate(){
         Armor shirt = new Armor("Cloth");
         assertTrue(shirt.isCloth());
+        assertFalse(shirt.isPlate());
     }
 
 
