@@ -1,16 +1,12 @@
 package game.rogue;
 
 public class Warrior extends PlayerClass{
-    private final int baseHealth = 20;
+    private final int baseHitPoints = 20;
     private final int baseMana = 5;
 
-    public Warrior(){
-
-    }
-
     @Override
-    public int getMaxHealth(int level) {
-        return this.baseHealth * level;
+    public int getMaxHitPoints(int level) {
+        return this.baseHitPoints * level;
     }
 
     @Override
@@ -35,11 +31,7 @@ public class Warrior extends PlayerClass{
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Warrior){
-            return true;
-        }else{
-            return false;
-        }
+        return other instanceof Warrior;
     }
 
 }

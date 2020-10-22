@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Inventory {
     private ArrayList<Item> bag;
-    private ArrayList<Item> equippedItems;
+    private ArrayList<Equipment> equippedItems;
 
     public Inventory() {
         bag = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Inventory {
     public void removeItemFromInventory(Item item) {
         bag.remove(item);
     }
-    public void equipItem(Item item){
+    public void equipItem(Equipment item){
         if (bag.contains(item)){
             bag.remove(item);
             equippedItems.add(item);
@@ -27,7 +27,7 @@ public class Inventory {
             throw new IllegalStateException("This item is not in player's inventory.");
         }
     }
-    public void unEquipItem(Item item){
+    public void unEquipItem(Equipment item){
         if(equippedItems.contains(item)){
             equippedItems.remove(item);
             bag.add(item);
@@ -44,7 +44,7 @@ public class Inventory {
         }
         return result;
     }
-
+    //getBag() kanske inte ens behövs.
     public ArrayList<Item> getBag() {
         ArrayList<Item> inventoryCopy = new ArrayList<>();
         inventoryCopy.addAll(bag);

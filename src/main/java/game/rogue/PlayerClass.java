@@ -4,7 +4,7 @@ public abstract class PlayerClass {
     private int baseHealth;
     private int baseMana;
 
-    public abstract int getMaxHealth(int level);
+    public abstract int getMaxHitPoints(int level);
 
     public abstract int getMaxMana(int level);
 
