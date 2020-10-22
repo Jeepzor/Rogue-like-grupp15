@@ -3,6 +3,7 @@ package game.rogue;
 import java.util.concurrent.*;
 
 public class Enemy extends Character {
+	private static final int MAX_LEVEL = 100;
 	private final int maxHitPoints;
 	private int currentHitPoints;
 	private boolean isAggressive;
@@ -18,7 +19,7 @@ public class Enemy extends Character {
 		if (strength < 1 || strength > 200) {
 			throw new IllegalArgumentException("Strength has to be between 1 and 200");
 		}
-		if (level < 1 || level > 100) {
+		if (level < 1 || level > MAX_LEVEL) {
 			throw new IllegalArgumentException("Level has to be between 1 and 100");
 		}
 		this.maxHitPoints = maxHitPoints;
@@ -26,7 +27,6 @@ public class Enemy extends Character {
 		this.isAggressive = isAggressive;
 		this.strength = strength;
 		this.level = level;
-
 	}
 
 	public int getMaxHitPoints() {
@@ -51,6 +51,13 @@ public class Enemy extends Character {
 
 	public int getLevel() {
 		return level;
+	}
+	
+	public void levelUp() {
+		if (level < MAX_LEVEL) {
+			level++;
+			currentHitPoints = maxHitPoints;
+		}
 	}
 
 	public void damage(int amount) {

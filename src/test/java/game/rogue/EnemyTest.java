@@ -28,6 +28,7 @@ public class EnemyTest {
 		assertEquals(75, DEFAULT_ENEMY.getPosition().getY());
 		assertEquals(5, DEFAULT_ENEMY.getStrength());
 		assertEquals(2, DEFAULT_ENEMY.getLevel());
+		assertTrue(DEFAULT_ENEMY.isAlive());
 	}
 
 	@Test
@@ -93,6 +94,35 @@ public class EnemyTest {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new Enemy(250, true, new Position(80, 20), 50, 101);
 		});
+	}
+	
+	@Test
+	public void levelUpFrom2To3() {
+		assertEquals(2, DEFAULT_ENEMY.getLevel());
+		DEFAULT_ENEMY.levelUp();
+		assertEquals(3, DEFAULT_ENEMY.getLevel());
+	}
+	
+	@Test
+	public void levelsStopAt100() {
+		assertEquals(2, DEFAULT_ENEMY.getLevel());
+		for (int i = 1; i < 100; i++) {
+			DEFAULT_ENEMY.levelUp();
+		}
+		assertEquals(100, DEFAULT_ENEMY.getLevel());
+	}
+	
+	@Test
+	public void levelingUpHealsEnemyToFull() {
+		assertEquals(2, DEFAULT_ENEMY.getLevel());
+		
+		DEFAULT_ENEMY.damage((int)(DEFAULT_ENEMY.getMaxHitPoints() * 0.5));
+		assertEquals(DEFAULT_ENEMY.getMaxHitPoints() * 0.5, DEFAULT_ENEMY.getCurrentHitPoints());
+		
+		DEFAULT_ENEMY.levelUp();
+		assertEquals(3, DEFAULT_ENEMY.getLevel());
+		assertEquals(DEFAULT_ENEMY.getMaxHitPoints(), DEFAULT_ENEMY.getCurrentHitPoints());
+		
 	}
 
 	@Test
