@@ -3,18 +3,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
+    Inventory bag = new Inventory();
+    GenericItem rock = new GenericItem();
+    GenericItem pebble = new GenericItem();
 
     @Test
     public void newInventoryIsEmpty() {
-        Inventory bag = new Inventory();
         assertEquals("[]", bag.getItemsInBag());
     }
 
     @Test
     public void inventoryWeightCalculatesCorrectly(){
-        Inventory bag = new Inventory();
-        GenericItem rock = new GenericItem();
-        GenericItem pebble = new GenericItem();
         bag.addItemToInventory(rock);
         bag.addItemToInventory(pebble);
         assertEquals(400, bag.getTotalWeight());
@@ -22,9 +21,6 @@ public class InventoryTest {
 
     @Test
     public void inventoryContentsReturnsItems(){
-        Inventory bag = new Inventory();
-        GenericItem rock = new GenericItem();
-        GenericItem pebble = new GenericItem();
         bag.addItemToInventory(rock);
         bag.addItemToInventory(pebble);
         assertEquals("[Rock, Rock]", bag.getItemsInBag());
@@ -32,7 +28,6 @@ public class InventoryTest {
 
     @Test
     public void removedItemAffectsWeight(){
-        Inventory bag = new Inventory();
         GenericItem stick = new GenericItem(20);
         bag.addItemToInventory(stick);
         GenericItem cobble = new GenericItem(2000);
@@ -43,11 +38,10 @@ public class InventoryTest {
 
     @Test
     public void equipItemFromBag(){
-        Inventory inventory = new Inventory();
         Armor plateArmor = new Armor("Plate");
-        inventory.addItemToInventory(plateArmor);
-        inventory.equipItem(plateArmor);
-        assertEquals("[Armor]", inventory.getEquippedItems());
+        bag.addItemToInventory(plateArmor);
+        bag.equipItem(plateArmor);
+        assertEquals("[Armor]", bag.getEquippedItems());
     }
 
     //här ska jag också göra test som kastar undantag för både equip och unequip.
