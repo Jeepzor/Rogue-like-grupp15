@@ -7,18 +7,24 @@ public class Player extends Character{
     private int level;
     private int experience;
     private int currentHitPoints;
+    private int currentMana;
     private PlayerClass playerClass;
 
     public Player(PlayerClass playerClass, Position position){
         super(position);
         this.playerClass = playerClass;
         this.level = 1;
-        this.currentHitPoints = playerClass.getMaxHealth(this.level);
+        this.currentHitPoints = playerClass.getMaxHitPoints(this.level);
+        this.currentMana = playerClass.getMaxMana(this.level);
         this.experience = 0;
     }
 
     public int getMaxHitPoints() {
-        return this.playerClass.getMaxHealth(this.level);
+        return this.playerClass.getMaxHitPoints(this.level);
+    }
+
+    public int getMaxMana() {
+        return this.playerClass.getMaxMana(this.level);
     }
 
     public boolean canEquipCloth(){
@@ -31,6 +37,10 @@ public class Player extends Character{
 
     public int getCurrentHitPoints() {
         return currentHitPoints;
+    }
+
+    public int getCurrentMana() {
+        return currentMana;
     }
 
     public int getLevel(){
@@ -86,7 +96,7 @@ public class Player extends Character{
         this.currentHitPoints = Math.max(0, this.currentHitPoints - amount);
     }
 
-    public void heal(int amount){
+    public void gainHitPoints(int amount){
         if (amount <= 0){
             throw new IllegalArgumentException("Healing amount has to be above 0!");
         }
@@ -97,12 +107,43 @@ public class Player extends Character{
         this.currentHitPoints = Math.min(this.currentHitPoints + amount, getMaxHitPoints());
     }
 
+    public void gainMana(int amount){
+        if (amount <= 0){
+            throw new IllegalArgumentException("Mana gained has to be above 0!");
+        }
+
+        if (this.currentMana == getMaxMana()){
+            throw new IllegalStateException("Player is already at full mana");
+        }
+
+        this.currentMana = Math.min(this.currentMana + amount, getMaxMana());
+    }
+
+    public void spendMana(int amount){
+        if (canAffordMana(amount)){
+            this.currentMana -= amount;
+        } else{
+            throw new IllegalStateException("Player does not have enough mana!");
+        }
+    }
+
+    public boolean canAffordMana(int amount){
+        if (amount < 0){
+            throw new IllegalArgumentException("Mana cost can't be negative!");
+        }
+
+        if (amount > getMaxMana()){
+            return false;
+        }
+        return true;
+    }
+
     public boolean isAlive(){
         return this.currentHitPoints > 0;
     }
 
     private void healToMaxHitPoints(){
-        this.currentHitPoints = playerClass.getMaxHealth(this.level);
+        this.currentHitPoints = playerClass.getMaxHitPoints(this.level);
     }
 
     private void setLevel(int level){

@@ -1,11 +1,11 @@
 package game.rogue;
 
 public class Wizard extends PlayerClass{
-    private int baseHealth = 10;
-    private int baseMana = 5;
+    private int baseHitPoints = 10;
+    private int baseMana = 20;
 
-    public int getMaxHealth(int level) {
-        return this.baseHealth * level;
+    public int getMaxHitPoints(int level) {
+        return this.baseHitPoints * level;
     }
 
     @Override
