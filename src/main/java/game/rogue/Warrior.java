@@ -1,16 +1,16 @@
 package game.rogue;
 
 public class Warrior extends PlayerClass{
-    private final int baseHitPoints = 20;
-    private final int baseMana = 5;
+    private final double baseHitPoints = 20;
+    private final double baseMana = 5;
 
     @Override
-    public int getMaxHitPoints(int level) {
+    public double getMaxHitPoints(int level) {
         return this.baseHitPoints * level;
     }
 
     @Override
-    public int getMaxMana(int level) {
+    public double getMaxMana(int level) {
         return this.baseMana;
     }
 
