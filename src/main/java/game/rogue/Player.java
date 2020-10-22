@@ -72,6 +72,7 @@ public class Player extends Character{
     public void levelUp(){
         incrementLevel();
         healToMaxHitPoints();
+        gainManaToMaxHitPoints();
     }
 
     public void changeClass(PlayerClass newClass){
@@ -132,10 +133,7 @@ public class Player extends Character{
             throw new IllegalArgumentException("Mana cost can't be negative!");
         }
 
-        if (amount > getMaxMana()){
-            return false;
-        }
-        return true;
+        return amount <= getCurrentMana();
     }
 
     public boolean isAlive(){
@@ -144,6 +142,10 @@ public class Player extends Character{
 
     private void healToMaxHitPoints(){
         this.currentHitPoints = playerClass.getMaxHitPoints(this.level);
+    }
+
+    private void gainManaToMaxHitPoints(){
+        this.currentMana = playerClass.getMaxMana(this.level);
     }
 
     private void setLevel(int level){

@@ -31,11 +31,7 @@ public class Warrior extends PlayerClass{
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Warrior){
-            return true;
-        }else{
-            return false;
-        }
+        return other instanceof Warrior;
     }
 
 }

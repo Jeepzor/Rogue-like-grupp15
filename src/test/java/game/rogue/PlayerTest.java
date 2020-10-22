@@ -189,9 +189,11 @@ public class PlayerTest {
     @Test
     public void levelUp() {
         player.takeDamage(5);
+        player.spendMana(3);
         player.levelUp();
         assertEquals(2, player.getLevel());
         assertEquals(player.getMaxHitPoints(), player.getCurrentHitPoints());
+        assertEquals(player.getMaxMana(), player.getCurrentMana());
     }
 
     @Test

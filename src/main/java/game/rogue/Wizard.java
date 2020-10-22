@@ -25,10 +25,6 @@ public class Wizard extends PlayerClass{
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Wizard){
-            return true;
-        }else{
-            return false;
-        }
+        return other instanceof Wizard;
     }
 }
