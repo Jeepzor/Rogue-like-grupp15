@@ -44,7 +44,7 @@ public class Inventory {
         }
         return result;
     }
-
+    //getBag() kanske inte ens behövs.
     public ArrayList<Item> getBag() {
         ArrayList<Item> inventoryCopy = new ArrayList<>();
         inventoryCopy.addAll(bag);

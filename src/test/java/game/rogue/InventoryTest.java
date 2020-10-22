@@ -6,6 +6,7 @@ public class InventoryTest {
     Inventory bag = new Inventory();
     GenericItem rock = new GenericItem();
     GenericItem pebble = new GenericItem();
+    Armor plateArmor = new Armor("Plate");
 
     @Test
     public void newInventoryIsEmpty() {
@@ -38,11 +39,30 @@ public class InventoryTest {
 
     @Test
     public void equipItemFromBag(){
-        Armor plateArmor = new Armor("Plate");
         bag.addItemToInventory(plateArmor);
         bag.equipItem(plateArmor);
         assertEquals("[Armor]", bag.getEquippedItems());
     }
 
-    //här ska jag också göra test som kastar undantag för både equip och unequip.
+    @Test
+    public void unequipEquippedItem(){
+        bag.addItemToInventory(plateArmor);
+        bag.equipItem(plateArmor);
+        bag.unEquipItem(plateArmor);
+        assertEquals("[]", bag.getEquippedItems());
+    }
+
+    @Test
+    public void equipItemNotInBagThrowsISE(){
+        assertThrows(IllegalStateException.class, () -> {
+            bag.equipItem(plateArmor);
+        });
+    }
+
+    @Test
+    public void unequipItemNotEquippedThrowsISE(){
+        assertThrows(IllegalStateException.class, () -> {
+            bag.unEquipItem(plateArmor);
+        });
+    }
 }
