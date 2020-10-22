@@ -13,13 +13,13 @@ public class Enemy extends Character {
 	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int strength, int level) {
 		super(position);
 		if (maxHitPoints < 10 || maxHitPoints > 1000) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Hit points has to be between 10 and 1000");
 		}
 		if (strength < 1 || strength > 200) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Strength has to be between 1 and 200");
 		}
 		if (level < 1 || level > 100) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Level has to be between 1 and 100");
 		}
 		this.maxHitPoints = maxHitPoints;
 		this.currentHitPoints = maxHitPoints;
@@ -60,6 +60,12 @@ public class Enemy extends Character {
 	}
 
 	public void heal(int amount) {
+		if (amount < 0) {
+			throw new IllegalArgumentException("Healing amount has to be above 0");
+		}
+		if (currentHitPoints == maxHitPoints) {
+			throw new IllegalArgumentException("Player is already at full health");
+		}
 		if ((currentHitPoints + amount) > maxHitPoints) {
 			currentHitPoints = maxHitPoints;
 		} else {
@@ -90,9 +96,9 @@ public class Enemy extends Character {
 	}
 
 	public boolean hasPlayerInArea(World world) {
-		Position playerPosition = world.getPlayer().getPosition();
-		return isInRange(getPosition().getX(), playerPosition.getX())
-				&& isInRange(getPosition().getY(), playerPosition.getY());
+		Position playerPos = world.getPlayer().getPosition();
+		Position enemyPos = getPosition();
+		return isInRange(enemyPos.getX(), playerPos.getX()) && isInRange(enemyPos.getY(), playerPos.getY());
 	}
 
 	private boolean isInRange(int enemyPos, int playerPos) {

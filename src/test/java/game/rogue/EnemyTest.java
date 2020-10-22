@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class EnemyTest {
 
 	private Enemy DEFAULT_ENEMY;
@@ -30,7 +31,7 @@ public class EnemyTest {
 	}
 
 	@Test
-	public void creatingEnemyWithLessThan10HPThrowsIAE() {
+	public void	CreatingEnemyWithLessThan10HPThrowsIAE() {
 		assertThrows(IllegalArgumentException.class, () -> {
 			new Enemy(9, true, new Position(40, 60), 6, 3);
 		});
@@ -140,6 +141,21 @@ public class EnemyTest {
 		DEFAULT_ENEMY.damage((int) (0.1 * DEFAULT_ENEMY.getMaxHitPoints()));
 		DEFAULT_ENEMY.heal((int) (0.2 * DEFAULT_ENEMY.getMaxHitPoints()));
 		assertTrue(DEFAULT_ENEMY.getCurrentHitPoints() == DEFAULT_ENEMY.getMaxHitPoints());
+	}
+	
+	@Test
+	public void enemyHealsWithLessThan0ThrowsIAE() {
+		assertThrows(IllegalArgumentException.class, () -> {
+			DEFAULT_ENEMY.heal(-1);
+		});
+	}
+	
+	@Test
+	public void enemyHealsWhenAlreadyAtFullHPThrowsIAE() {
+		assertEquals(DEFAULT_ENEMY.getCurrentHitPoints(), DEFAULT_ENEMY.getMaxHitPoints());
+		assertThrows(IllegalArgumentException.class, () -> {
+			DEFAULT_ENEMY.heal(1);
+		});
 	}
 
 	@Test
