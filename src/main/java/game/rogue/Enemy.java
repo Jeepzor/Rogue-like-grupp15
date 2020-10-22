@@ -8,16 +8,12 @@ public class Enemy extends Character {
 	private int currentHitPoints;
 	private boolean isAggressive;
 	private boolean isInCombat;
-	private int strength;
 	private int level;
 
-	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int strength, int level) {
+	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int level) {
 		super(position);
 		if (maxHitPoints < 10 || maxHitPoints > 1000) {
 			throw new IllegalArgumentException("Hit points has to be between 10 and 1000");
-		}
-		if (strength < 1 || strength > 200) {
-			throw new IllegalArgumentException("Strength has to be between 1 and 200");
 		}
 		if (level < 1 || level > MAX_LEVEL) {
 			throw new IllegalArgumentException("Level has to be between 1 and 100");
@@ -25,7 +21,6 @@ public class Enemy extends Character {
 		this.maxHitPoints = maxHitPoints;
 		this.currentHitPoints = maxHitPoints;
 		this.isAggressive = isAggressive;
-		this.strength = strength;
 		this.level = level;
 	}
 
@@ -46,7 +41,7 @@ public class Enemy extends Character {
 	}
 
 	public int getStrength() {
-		return strength;
+		return level * 2;
 	}
 
 	public int getLevel() {
@@ -125,7 +120,7 @@ public class Enemy extends Character {
 	}
 
 	public void attack(Player player) {
-		player.takeDamage(strength);
+		player.takeDamage(getStrength());
 	}
 
 }

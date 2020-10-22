@@ -16,7 +16,7 @@ public class WorldTest {
 	public void setUp() {
 		DEFAULT_PLAYER = new Player(new Warrior(), new Position(50, 100));
 		DEFAULT_WORLD = new World(5000, 7500, DEFAULT_PLAYER);
-		DEFAULT_ENEMY = new Enemy(250, true, new Position(30, 80), 5, 2);
+		DEFAULT_ENEMY = new Enemy(250, true, new Position(30, 80), 2);
 	}
 
 	@Test
@@ -70,7 +70,7 @@ public class WorldTest {
 	
 	@Test
 	public void removeEnemy() {
-		Enemy e = new Enemy(100, true, new Position(10, 10), 2, 5);
+		Enemy e = new Enemy(100, true, new Position(10, 10), 5);
 		
 		DEFAULT_WORLD.addEnemy(DEFAULT_ENEMY);
 		DEFAULT_WORLD.addEnemy(e);
