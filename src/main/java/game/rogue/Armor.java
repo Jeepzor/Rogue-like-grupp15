@@ -20,8 +20,9 @@ public class Armor extends Equipment{
         super(DEFAULT_WEIGHT);
         this.armorType = ArmorType.valueOf(type.substring(0,1).toUpperCase() + type.substring(1).toLowerCase());
     }
-    public Armor(String type, int customWeight){
-        super(customWeight);
+
+    public Armor(String type, int levelReq){
+        super(DEFAULT_WEIGHT, levelReq);
         this.armorType = ArmorType.valueOf(type.substring(0,1).toUpperCase() + type.substring(1).toLowerCase());
     }
 

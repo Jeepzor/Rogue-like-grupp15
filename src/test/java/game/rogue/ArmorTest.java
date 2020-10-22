@@ -28,9 +28,9 @@ class ArmorTest {
     }
 
     @Test
-    public void armorWithSpecificWeight(){
-        Armor heavyArmor = new Armor("plate", 950);
-        assertEquals(950, heavyArmor.getWeight());
+    public void armorWithSpecificLevelReq(){
+        Armor heavyArmor = new Armor("plate", 10);
+        assertEquals(10, heavyArmor.getLevelRequirement());
     }
 
     @Test
