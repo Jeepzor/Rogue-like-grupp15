@@ -97,6 +97,11 @@ public class Player extends Character{
         this.currentHitPoints = Math.max(0, this.currentHitPoints - amount);
     }
 
+    public double getDamageValue(){
+        // Needs to also get the damage from all items
+        return this.playerClass.getDamage(getLevel());
+    }
+
     public void gainHitPoints(double amount){
         if (amount <= 0){
             throw new IllegalArgumentException("Healing amount has to be above 0!");

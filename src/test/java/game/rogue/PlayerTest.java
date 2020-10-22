@@ -29,6 +29,12 @@ public class PlayerTest {
     }
 
     @Test
+    public void correctClassStartDamage() {
+        assertEquals(3, playerWarrior.getDamageValue());
+        assertEquals(2, playerWizard.getDamageValue());
+    }
+
+    @Test
     public void testWizardArmor(){
         assertTrue(playerWizard.canEquipCloth());
         assertFalse(playerWizard.canEquipPlate());

@@ -3,6 +3,8 @@ package game.rogue;
 public class Warrior extends PlayerClass{
     private final double baseHitPoints = 20;
     private final double baseMana = 5;
+    private final double baseDamage = 3;
+    private final double damagePerLevel = 1.5;
 
     @Override
     public double getMaxHitPoints(int level) {
@@ -25,13 +27,18 @@ public class Warrior extends PlayerClass{
     }
 
     @Override
-    public String toString(){
-        return "Class: Warrior";
+    public boolean equals(Object other) {
+        return other instanceof Warrior;
     }
 
     @Override
-    public boolean equals(Object other) {
-        return other instanceof Warrior;
+    public double getDamage(int level){
+        return baseDamage + damagePerLevel * (level - 1);
+    }
+
+    @Override
+    public String toString(){
+        return "Class: Warrior";
     }
 
 }
