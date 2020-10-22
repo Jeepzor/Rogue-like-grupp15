@@ -4,31 +4,28 @@ import java.util.concurrent.*;
 
 public class Enemy extends Character {
 	private static final int MAX_LEVEL = 100;
-	private final int maxHitPoints;
-	private int currentHitPoints;
+	private double maxHitPoints;
+	private double currentHitPoints;
 	private boolean isAggressive;
 	private boolean isInCombat;
 	private int level;
 
-	public Enemy(int maxHitPoints, boolean isAggressive, Position position, int level) {
+	public Enemy(int level, boolean isAggressive, Position position) {
 		super(position);
-		if (maxHitPoints < 10 || maxHitPoints > 1000) {
-			throw new IllegalArgumentException("Hit points has to be between 10 and 1000");
-		}
 		if (level < 1 || level > MAX_LEVEL) {
 			throw new IllegalArgumentException("Level has to be between 1 and 100");
 		}
-		this.maxHitPoints = maxHitPoints;
+		this.maxHitPoints = (level * 2) * Math.sqrt(level);
 		this.currentHitPoints = maxHitPoints;
 		this.isAggressive = isAggressive;
 		this.level = level;
 	}
 
-	public int getMaxHitPoints() {
+	public double getMaxHitPoints() {
 		return maxHitPoints;
 	}
 
-	public int getCurrentHitPoints() {
+	public double getCurrentHitPoints() {
 		return currentHitPoints;
 	}
 
@@ -47,29 +44,34 @@ public class Enemy extends Character {
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public void levelUp() {
 		if (level < MAX_LEVEL) {
 			incrementLevel();
+			increaseMaxHitPoints();
 			healToMaxHitPoints();
 		}
 	}
-	
+
 	private void incrementLevel() {
 		level++;
 	}
-	
+
+	private void increaseMaxHitPoints() {
+		maxHitPoints += (level * 2) * Math.sqrt(level);
+	}
+
 	private void healToMaxHitPoints() {
 		currentHitPoints = maxHitPoints;
 	}
 
-	public void damage(int amount) {
+	public void damage(double amount) {
 		if (amount >= 0) {
 			currentHitPoints -= amount;
 		}
 	}
 
-	public void heal(int amount) {
+	public void heal(double amount) {
 		if (amount < 0) {
 			throw new IllegalArgumentException("Healing amount has to be above 0");
 		}
