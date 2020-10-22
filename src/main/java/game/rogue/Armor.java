@@ -1,6 +1,6 @@
 package game.rogue;
 
-public class Armor extends Item{
+public class Armor extends Equipment{
     private final static int DEFAULT_WEIGHT = 200;
     private ArmorType armorType;
 

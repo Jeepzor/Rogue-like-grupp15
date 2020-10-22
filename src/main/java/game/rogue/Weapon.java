@@ -1,6 +1,6 @@
 package game.rogue;
 
-public class Weapon extends Item{
+public class Weapon extends Equipment{
     private static final int DEFAULT_WEIGHT = 800;
     private int damage;
     private boolean twoHanded;

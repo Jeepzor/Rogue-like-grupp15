@@ -44,7 +44,7 @@ public class InventoryTest {
     @Test
     public void equipItemFromBag(){
         Inventory inventory = new Inventory();
-        Item plateArmor = new Armor("Plate");
+        Armor plateArmor = new Armor("Plate");
         inventory.addItemToInventory(plateArmor);
         inventory.equipItem(plateArmor);
         assertEquals("[Armor]", inventory.getEquippedItems());
