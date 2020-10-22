@@ -11,6 +11,11 @@ public class Weapon extends Item{
         this.twoHanded = twoHanded;
     }
 
+    public Weapon(int damage, int customWeight, boolean twoHanded){
+        super(customWeight);
+        this.damage = damage;
+        this.twoHanded = twoHanded;
+    }
 
     public int getDamage(){
         return this.damage;

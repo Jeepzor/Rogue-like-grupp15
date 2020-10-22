@@ -14,4 +14,10 @@ class WeaponTest {
         assertEquals(false, weapon.isTwoHanded());
     }
 
+    @Test
+    public void weaponCustomWeightTest(){
+        Weapon heavyWeapon = new Weapon(10, 2400, true);
+        assertEquals(2400, heavyWeapon.getWeight());
+    }
+
 }
