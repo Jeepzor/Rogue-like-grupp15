@@ -55,9 +55,17 @@ public class Enemy extends Character {
 	
 	public void levelUp() {
 		if (level < MAX_LEVEL) {
-			level++;
-			currentHitPoints = maxHitPoints;
+			incrementLevel();
+			healToMaxHitPoints();
 		}
+	}
+	
+	private void incrementLevel() {
+		level++;
+	}
+	
+	private void healToMaxHitPoints() {
+		currentHitPoints = maxHitPoints;
 	}
 
 	public void damage(int amount) {
