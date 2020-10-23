@@ -162,4 +162,9 @@ public class Player extends Character{
             this.level += 1;
         }
     }
+
+    @Override
+    public String toString(){
+        return "Player - " + this.playerClass + " - Level: " + getLevel();
+    }
 }

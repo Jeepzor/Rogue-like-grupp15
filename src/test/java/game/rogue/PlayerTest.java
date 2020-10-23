@@ -35,6 +35,12 @@ public class PlayerTest {
     }
 
     @Test
+    public void correctPlayerToString(){
+        assertEquals("Player - Class: Warrior - Level: 1", playerWarrior.toString());
+        assertEquals("Player - Class: Wizard - Level: 1", playerWizard.toString());
+    }
+
+    @Test
     public void testWizardArmor(){
         assertTrue(playerWizard.canEquipCloth());
         assertFalse(playerWizard.canEquipPlate());
