@@ -20,8 +20,8 @@ public class WorldTest {
 
 	@Test
 	public void constructorCreatesMap() {
-		assertEquals(5000, DEFAULT_WORLD.getHeight());
-		assertEquals(7500, DEFAULT_WORLD.getWidth());
+		assertEquals(5000, DEFAULT_WORLD.getWidth());
+		assertEquals(7500, DEFAULT_WORLD.getHeight());
 		assertEquals(DEFAULT_PLAYER, DEFAULT_WORLD.getPlayer());
 	}
 
