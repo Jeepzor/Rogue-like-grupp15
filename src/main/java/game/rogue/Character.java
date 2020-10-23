@@ -27,6 +27,6 @@ public abstract class Character {
 		} else {
 			position.setY(currentY + y, world);
 		}
-
+		
 	}
 }

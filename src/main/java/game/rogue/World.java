@@ -8,12 +8,12 @@ public class World {
 	private Player player;
 	private HashMap<Position, Enemy> enemies;
 
-	public World(int height, int width, Player player) {
-		if (height < 0 || height > 50000 || width < 0 || width > 50000 || player == null)  {
+	public World(int width, int height, Player player) {
+		if (width < 0 || width > 50000 || height < 0 || height > 50000 || player == null)  {
 			throw new IllegalArgumentException();
 		}
-		this.height = height;
 		this.width = width;
+		this.height = height;
 		this.player = player;
 		this.enemies = new HashMap<Position, Enemy>();
 	}
