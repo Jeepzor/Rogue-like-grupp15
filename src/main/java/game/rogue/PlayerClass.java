@@ -1,12 +1,16 @@
 package game.rogue;
 
 public abstract class PlayerClass {
-    private int baseHealth;
-    private int baseMana;
+    private double baseHealth;
+    private double baseMana;
+    private double baseDamage;
+    private double damagePerLevel;
 
-    public abstract int getMaxHitPoints(int level);
+    public abstract double getMaxHitPoints(int level);
 
-    public abstract int getMaxMana(int level);
+    public abstract double getMaxMana(int level);
+
+    public abstract double getDamage(int level);
 
     public boolean canEquipCloth(){
         return false;
@@ -15,4 +19,6 @@ public abstract class PlayerClass {
     public boolean canEquipPlate(){
         return false;
     }
+
+
 }

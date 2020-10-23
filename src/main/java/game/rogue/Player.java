@@ -6,8 +6,8 @@ public class Player extends Character{
     private static final int CLASS_CHANGE_COST = 5;
     private int level;
     private int experience;
-    private int currentHitPoints;
-    private int currentMana;
+    private double currentHitPoints;
+    private double currentMana;
     private PlayerClass playerClass;
 
     public Player(PlayerClass playerClass, Position position){
@@ -19,11 +19,11 @@ public class Player extends Character{
         this.experience = 0;
     }
 
-    public int getMaxHitPoints() {
+    public double getMaxHitPoints() {
         return this.playerClass.getMaxHitPoints(this.level);
     }
 
-    public int getMaxMana() {
+    public double getMaxMana() {
         return this.playerClass.getMaxMana(this.level);
     }
 
@@ -35,11 +35,11 @@ public class Player extends Character{
         return playerClass.canEquipPlate();
     }
 
-    public int getCurrentHitPoints() {
+    public double getCurrentHitPoints() {
         return currentHitPoints;
     }
 
-    public int getCurrentMana() {
+    public double getCurrentMana() {
         return currentMana;
     }
 
@@ -90,14 +90,19 @@ public class Player extends Character{
         this.playerClass = newClass;
     }
 
-    public void takeDamage(int amount){
+    public void takeDamage(double amount){
         if (amount < 0){
             throw new IllegalArgumentException("Damage can't be negative!");
         }
         this.currentHitPoints = Math.max(0, this.currentHitPoints - amount);
     }
 
-    public void gainHitPoints(int amount){
+    public double getDamageValue(){
+        // Needs to also get the damage from all items
+        return this.playerClass.getDamage(getLevel());
+    }
+
+    public void gainHitPoints(double amount){
         if (amount <= 0){
             throw new IllegalArgumentException("Healing amount has to be above 0!");
         }
@@ -108,7 +113,7 @@ public class Player extends Character{
         this.currentHitPoints = Math.min(this.currentHitPoints + amount, getMaxHitPoints());
     }
 
-    public void gainMana(int amount){
+    public void gainMana(double amount){
         if (amount <= 0){
             throw new IllegalArgumentException("Mana gained has to be above 0!");
         }
@@ -120,7 +125,7 @@ public class Player extends Character{
         this.currentMana = Math.min(this.currentMana + amount, getMaxMana());
     }
 
-    public void spendMana(int amount){
+    public void spendMana(double amount){
         if (canAffordMana(amount)){
             this.currentMana -= amount;
         } else{
@@ -128,7 +133,7 @@ public class Player extends Character{
         }
     }
 
-    public boolean canAffordMana(int amount){
+    public boolean canAffordMana(double amount){
         if (amount < 0){
             throw new IllegalArgumentException("Mana cost can't be negative!");
         }

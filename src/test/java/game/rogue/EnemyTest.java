@@ -293,7 +293,7 @@ public class EnemyTest {
 
 	@Test
 	public void attackPlayerReducesItsHP() {
-		final int playersCurrentHP = DEFAULT_PLAYER.getCurrentHitPoints();
+		final double playersCurrentHP = DEFAULT_PLAYER.getCurrentHitPoints();
 
 		DEFAULT_ENEMY.attack(DEFAULT_PLAYER);
 		assertEquals(playersCurrentHP - DEFAULT_ENEMY.getStrength(), DEFAULT_PLAYER.getCurrentHitPoints());

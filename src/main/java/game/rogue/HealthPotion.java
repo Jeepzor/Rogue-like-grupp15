@@ -8,6 +8,6 @@ public class HealthPotion extends Consumable{
     }
 
     public void consume(Player player){
-        //something
+        player.gainHitPoints(this.getSize());
     }
 }
