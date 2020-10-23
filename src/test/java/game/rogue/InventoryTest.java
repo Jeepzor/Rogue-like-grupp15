@@ -3,7 +3,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
-    Inventory bag = new Inventory();
+    Player player = new Player(new Wizard(), new Position(5, 5));
+    Inventory bag = new Inventory(player);
     GenericItem rock = new GenericItem();
     GenericItem pebble = new GenericItem();
     Armor plateArmor = new Armor("Plate");

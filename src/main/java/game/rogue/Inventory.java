@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Inventory {
     private ArrayList<Item> bag;
     private ArrayList<Equipment> equippedItems;
+    private Player player;
 
-    public Inventory() {
+    public Inventory(Player player) {
         bag = new ArrayList<>();
         equippedItems = new ArrayList<>();
+        this.player = player;
     }
 
     public void addItemToInventory(Item item) {
