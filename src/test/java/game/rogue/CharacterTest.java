@@ -61,16 +61,30 @@ class CharacterTest {
 	}
 
 	@Test
-	public void characterMovesOutsideMapOnXStopAtEdge() {
+	public void characterMovesOutsideMapOnMinXStopAtEdge() {
 		DEFAULT_PLAYER.move(DEFAULT_WORLD, -11, -19);
 		assertEquals(0, DEFAULT_PLAYER.getPosition().getX());
 		assertEquals(1, DEFAULT_PLAYER.getPosition().getY());
 	}
 	
 	@Test
-	public void characterMovesOutsideMapOnYStopAtEdge() {
+	public void characterMovesOutsideMapOnMinYStopAtEdge() {
 		DEFAULT_PLAYER.move(DEFAULT_WORLD, -9, -21);
 		assertEquals(1, DEFAULT_PLAYER.getPosition().getX());
 		assertEquals(0, DEFAULT_PLAYER.getPosition().getY());
+	}
+	
+	@Test
+	public void characterMovesOutsideMapOnMaxXStopAtEdge() {
+		DEFAULT_PLAYER.move(DEFAULT_WORLD, 91, 180);
+		assertEquals(100, DEFAULT_PLAYER.getPosition().getX());
+		assertEquals(200, DEFAULT_PLAYER.getPosition().getY());
+	}
+	
+	@Test
+	public void characterMovesOutsideMapOnMaxYStopAtEdge() {
+		DEFAULT_PLAYER.move(DEFAULT_WORLD, 90, 181);
+		assertEquals(100, DEFAULT_PLAYER.getPosition().getX());
+		assertEquals(200, DEFAULT_PLAYER.getPosition().getY());
 	}
 }
