@@ -75,4 +75,54 @@ class PositionTest {
 			DEFAULT_POSITION.setX(DEFAULT_WORLD.getWidth() + 1, DEFAULT_WORLD);
 		});
 	}
+	
+	@Test
+	public void equalsReturnsTrueWhenEqual() {
+		Position p1 = new Position(50, 75);
+		Position p2 = new Position(50, 75);
+		assertTrue(p1.equals(p2));
+		assertTrue(p2.equals(p1));
+	}
+	
+	@Test
+	public void equalsReturnsFalseWhenNoneIsEqual() {
+		Position p1 = new Position(50, 75);
+		Position p2 = new Position(55, 80);
+		assertFalse(p1.equals(p2));
+		assertFalse(p2.equals(p1));
+	}
+	
+	@Test
+	public void equalsReturnsFalseWhenXNotEqual() {
+		Position p1 = new Position(50, 75);
+		Position p2 = new Position(55, 75);
+		assertFalse(p1.equals(p2));
+		assertFalse(p2.equals(p1));
+	}
+	
+	@Test
+	public void equalsReturnsFalseWhenYNotEqual() {
+		Position p1 = new Position(50, 75);
+		Position p2 = new Position(50, 80);
+		assertFalse(p1.equals(p2));
+		assertFalse(p2.equals(p1));
+	}
+	
+	@Test
+	public void equalsReturnsFalseIfParamIsNull() {
+		assertFalse(DEFAULT_POSITION.equals(null));
+	}
+	
+	@Test
+	public void equalsReturnsFalseIfParamNotPosition() {
+		Object o = new Object();
+		assertFalse(DEFAULT_POSITION.equals(o));
+	}
+	
+	@Test
+	public void hashCodeReturnsCorrectValue() {
+		final int result = DEFAULT_POSITION.getX() * 31 + DEFAULT_POSITION.getY();
+		assertEquals(result, DEFAULT_POSITION.hashCode());
+	}
+	
 }
