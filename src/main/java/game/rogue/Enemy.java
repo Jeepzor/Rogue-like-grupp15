@@ -15,10 +15,10 @@ public class Enemy extends Character {
 		if (level < 1 || level > MAX_LEVEL) {
 			throw new IllegalArgumentException("Level has to be between 1 and 100");
 		}
+		this.level = level;
 		this.maxHitPoints = (level * 2) * Math.sqrt(level);
 		this.currentHitPoints = maxHitPoints;
 		this.isAggressive = isAggressive;
-		this.level = level;
 	}
 
 	public double getMaxHitPoints() {
@@ -45,22 +45,6 @@ public class Enemy extends Character {
 		return level;
 	}
 
-	public void levelUp() {
-		if (level < MAX_LEVEL) {
-			incrementLevel();
-			increaseMaxHitPoints();
-			healToMaxHitPoints();
-		}
-	}
-
-	private void incrementLevel() {
-		level++;
-	}
-
-	private void increaseMaxHitPoints() {
-		maxHitPoints += (level * 2) * Math.sqrt(level);
-	}
-
 	private void healToMaxHitPoints() {
 		currentHitPoints = maxHitPoints;
 	}
@@ -79,14 +63,14 @@ public class Enemy extends Character {
 			throw new IllegalArgumentException("Player is already at full health");
 		}
 		if ((currentHitPoints + amount) > maxHitPoints) {
-			currentHitPoints = maxHitPoints;
+			healToMaxHitPoints();
 		} else {
 			currentHitPoints += amount;
 		}
 	}
 
 	public boolean isAlive() {
-		return currentHitPoints >= 0;
+		return currentHitPoints > 0;
 	}
 
 	@Override
