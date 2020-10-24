@@ -5,7 +5,7 @@ public abstract class Ability {
     private int level;
 
     Ability(int level){
-        this.level = level;
+        this.level = Math.min(level, MAX_LEVEL);
     }
 
     public abstract double getManaCost();

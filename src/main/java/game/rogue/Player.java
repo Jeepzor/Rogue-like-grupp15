@@ -1,5 +1,7 @@
 package game.rogue;
 
+import java.util.ArrayList;
+
 public class Player extends Character{
     private static final int MAX_LEVEL = 100;
     private static final int BASE_LEVEL_UP_THRESHOLD = 100;
@@ -9,9 +11,11 @@ public class Player extends Character{
     private double currentHitPoints;
     private double currentMana;
     private PlayerClass playerClass;
+    private ArrayList<Ability> abilities;
 
     public Player(PlayerClass playerClass, Position position){
         super(position);
+        this.abilities = new ArrayList<>();
         this.playerClass = playerClass;
         this.level = 1;
         this.currentHitPoints = playerClass.getMaxHitPoints(this.level);
@@ -47,6 +51,10 @@ public class Player extends Character{
         return this.level;
     }
 
+    public int getNextLevelThreshold(){
+        return BASE_LEVEL_UP_THRESHOLD * this.level;
+    }
+
     public int getExperience() {
         return this.experience;
     }
@@ -65,10 +73,6 @@ public class Player extends Character{
         }
     }
 
-    public int getNextLevelThreshold(){
-        return BASE_LEVEL_UP_THRESHOLD * this.level;
-    }
-
     public void levelUp(){
         incrementLevel();
         healToMaxHitPoints();
@@ -84,6 +88,14 @@ public class Player extends Character{
         }
         setNewClass(newClass);
         setLevel(getLevel() - CLASS_CHANGE_COST);
+    }
+
+    public void gainAbility(Ability newAbility){
+        if (newAbility.hasRequiredClass(this.playerClass)){
+            abilities.add(newAbility);
+        }else{
+            throw new IllegalArgumentException("Class requirement unmet!");
+        }
     }
 
     public void setNewClass(PlayerClass newClass){

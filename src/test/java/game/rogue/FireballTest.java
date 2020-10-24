@@ -6,6 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FireballTest {
     Fireball fireball = new Fireball(1);
+
+    @Test
+    void createHigherThanMaxLevel(){
+        Fireball fireball2 = new Fireball(6);
+        assertEquals(5, fireball.getLevel());
+    }
+
     @Test
     void levelUpTest() {
         for(int i = 1; i < 5; i++){
