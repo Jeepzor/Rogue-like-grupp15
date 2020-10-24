@@ -7,6 +7,9 @@ public abstract class Ability {
     Ability(int level){
         this.level = level;
     }
+
+    public abstract double getManaCost();
+
     public void incrementLevel(){
         if (this.level < MAX_LEVEL){
             this.level += 1;

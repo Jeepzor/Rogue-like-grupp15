@@ -22,4 +22,11 @@ class FireballTest {
 
         assertEquals(5.5, fireball.getDamageValue());
     }
+
+    @Test
+    void getManaCost() {
+        assertEquals(8, fireball.getManaCost());
+        fireball.incrementLevel();
+        assertEquals(7, fireball.getManaCost());
+    }
 }
