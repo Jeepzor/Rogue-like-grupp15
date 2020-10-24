@@ -237,6 +237,17 @@ public class PlayerTest {
     public void gainNewAbility(){
         Fireball fireball = new Fireball(1);
         playerWizard.gainAbility(fireball);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
         assertThrows(IllegalArgumentException.class, () -> playerWarrior.gainAbility(fireball));
+    }
+
+    @Test
+    public void gainSameAbilityIncrementLevel(){
+        Fireball fireball = new Fireball(1);
+        Fireball fireball2 = new Fireball(1);
+        playerWizard.gainAbility(fireball);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
+        playerWizard.gainAbility(fireball2);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
     }
 }

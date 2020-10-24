@@ -92,10 +92,22 @@ public class Player extends Character{
 
     public void gainAbility(Ability newAbility){
         if (newAbility.hasRequiredClass(this.playerClass)){
-            abilities.add(newAbility);
+            boolean found = false;
+            for (Ability temp : abilities)
+                if (newAbility.equals(temp)){
+                    found = true;
+                    temp.incrementLevel();
+                }
+            if (!found){
+                abilities.add(newAbility);
+            }
         }else{
             throw new IllegalArgumentException("Class requirement unmet!");
         }
+    }
+
+    public int getAmountOfAbilities(){
+        return abilities.size();
     }
 
     public void setNewClass(PlayerClass newClass){
