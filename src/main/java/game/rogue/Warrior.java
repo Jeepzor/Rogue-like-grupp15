@@ -1,5 +1,7 @@
 package game.rogue;
 
+import java.util.Objects;
+
 public class Warrior extends PlayerClass{
     private final double baseHitPoints = 20;
     private final double baseMana = 5;
@@ -29,6 +31,11 @@ public class Warrior extends PlayerClass{
     @Override
     public boolean equals(Object other) {
         return other instanceof Warrior;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(baseHitPoints, baseMana, baseDamage, damagePerLevel);
     }
 
     @Override

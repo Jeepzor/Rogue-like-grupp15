@@ -1,5 +1,7 @@
 package game.rogue;
 
+import java.util.Objects;
+
 public class Wizard extends PlayerClass{
     private double baseHitPoints = 10;
     private double baseMana = 20;
@@ -28,6 +30,11 @@ public class Wizard extends PlayerClass{
     @Override
     public boolean equals(Object other) {
         return other instanceof Wizard;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(baseHitPoints, baseMana, baseDamage, damagePerLevel);
     }
 
     @Override

@@ -9,6 +9,7 @@ public abstract class Ability {
     }
 
     public abstract double getManaCost();
+    public abstract boolean hasRequiredClass(PlayerClass playerClass);
 
     public void incrementLevel(){
         if (this.level < MAX_LEVEL){

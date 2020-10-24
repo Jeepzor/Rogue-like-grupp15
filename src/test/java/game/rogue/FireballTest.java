@@ -29,4 +29,12 @@ class FireballTest {
         fireball.incrementLevel();
         assertEquals(7, fireball.getManaCost());
     }
+
+    @Test
+    void hasRequiredClass() {
+        Wizard playerWizard = new Wizard();
+        Warrior playerWarrior = new Warrior();
+        assertTrue(fireball.hasRequiredClass(playerWizard));
+        assertFalse(fireball.hasRequiredClass(playerWarrior));
+    }
 }
