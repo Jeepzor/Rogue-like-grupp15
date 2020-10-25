@@ -8,6 +8,9 @@ public class InventoryTest {
     GenericItem rock = new GenericItem();
     GenericItem pebble = new GenericItem();
     Armor plateArmor = new Armor("Plate");
+    Weapon sword = new Weapon(10, false);
+    Armor boots = new Armor("Cloth");
+    Armor bling = new Armor("plate");
 
     @Test
     public void newInventoryIsEmpty() {
@@ -64,6 +67,19 @@ public class InventoryTest {
     public void unequipItemNotEquippedThrowsISE(){
         assertThrows(IllegalStateException.class, () -> {
             bag.unEquipItem(plateArmor);
+        });
+    }
+    @Test
+    public void equipTooManyItemsThrowsISE(){
+        bag.addItemToInventory(plateArmor);
+        bag.addItemToInventory(sword);
+        bag.addItemToInventory(boots);
+        bag.addItemToInventory(bling);
+        bag.equipItem(plateArmor);
+        bag.equipItem(sword);
+        bag.equipItem(boots);
+        assertThrows(IllegalStateException.class, () ->{
+            bag.equipItem(bling);
         });
     }
 }

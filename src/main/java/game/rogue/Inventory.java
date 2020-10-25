@@ -21,12 +21,16 @@ public class Inventory {
         bag.remove(item);
     }
     public void equipItem(Equipment item){
-        if (bag.contains(item)){
-            bag.remove(item);
-            equippedItems.add(item);
-        }
-        else{
-            throw new IllegalStateException("This item is not in player's inventory.");
+        if(equippedItems.size() < 3){
+            if (bag.contains(item)){
+                bag.remove(item);
+                equippedItems.add(item);
+            }
+            else{
+                throw new IllegalStateException("This item is not in player's inventory.");
+            }
+        }else{
+            throw new IllegalStateException("There are too many items equipped.");
         }
     }
     public void unEquipItem(Equipment item){
