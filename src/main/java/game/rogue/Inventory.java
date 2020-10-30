@@ -23,18 +23,21 @@ public class Inventory {
     }
 
     public void equipItem(Equipment item){
-        if(equippedItems.size() < 3){
-            if (bag.contains(item)){
-                bag.remove(item);
-                equippedItems.add(item);
-            }
-            else{
-                throw new IllegalStateException("This item is not in player's inventory.");
-            }
-        }else{
-            throw new IllegalStateException("There are too many items equipped.");
+        if(!bag.contains(item)) {
+            throw new IllegalStateException("This item is not in player's inventory");
+        }
+        else if((equippedItems.size() >=3)){
+            throw new IllegalStateException("There are too many equipped items");
+        }
+        else if(!canWear(item)) {
+            throw new IllegalStateException("Player can not equip that item");
+        }
+        else{
+            bag.remove(item);
+            equippedItems.add(item);
         }
     }
+
 
     public void validateEquippedItems(){
        Iterator<Equipment> iterator = equippedItems.iterator();
