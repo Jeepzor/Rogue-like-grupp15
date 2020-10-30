@@ -20,6 +20,7 @@ public class Inventory {
     public void removeItemFromInventory(Item item) {
         bag.remove(item);
     }
+
     public void equipItem(Equipment item){
         if(equippedItems.size() < 3){
             if (bag.contains(item)){
@@ -33,6 +34,28 @@ public class Inventory {
             throw new IllegalStateException("There are too many items equipped.");
         }
     }
+
+    public boolean canEquip(Equipment item){
+        return hasRequireLevel(item) && hasRequireClass(item);
+    }
+
+    public boolean hasRequireLevel(Equipment item){
+        return this.player.getLevel() >= item.getLevelRequirement();
+    }
+
+    public boolean hasRequireClass(Equipment item){
+        if (item instanceof Armor){
+            if (((Armor) item).isPlate()){
+                return this.player.canEquipPlate();
+            }else if (((Armor) item).isCloth()){
+                return this.player.canEquipCloth();
+            }
+        }else if (item instanceof Weapon) {
+            return false; // Temporary
+        }
+        return false;
+    }
+
     public void unEquipItem(Equipment item){
         if(equippedItems.contains(item)){
             equippedItems.remove(item);
@@ -41,7 +64,6 @@ public class Inventory {
             throw new IllegalStateException("That item is not equipped.");
         }
     }
-
 
     public int getTotalWeight() {
         int result = 0;

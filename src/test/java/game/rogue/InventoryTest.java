@@ -10,7 +10,21 @@ public class InventoryTest {
     Armor plateArmor = new Armor("Plate");
     Weapon sword = new Weapon(10, false);
     Armor boots = new Armor("Cloth");
-    Armor bling = new Armor("plate");
+    Armor bling = new Armor("plate", 5);
+
+
+    @Test
+    public void hasRequireLevelToEquipItem(){
+        assertFalse(bag.hasRequireLevel(bling));
+        assertTrue(bag.hasRequireLevel(boots));
+    }
+
+    @Test
+    public void hasRequirementsForEquipment(){
+        assertTrue(bag.hasRequireClass(boots));
+        assertTrue(bag.hasRequireClass(plateArmor));
+    }
+
 
     @Test
     public void newInventoryIsEmpty() {
