@@ -1,7 +1,7 @@
 package game.rogue;
 
 public abstract class Character {
-	private Position position;
+	private final Position position;
 
 	public Character(Position position) {
 		if (position == null) {

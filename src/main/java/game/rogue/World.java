@@ -3,10 +3,10 @@ package game.rogue;
 import java.util.*;
 
 public class World {
-	private int height;
-	private int width;
-	private Player player;
-	private HashMap<Position, Enemy> enemies;
+	private final int height;
+	private final int width;
+	private final Player player;
+	private final HashMap<Position, Enemy> enemies;
 
 	public World(int width, int height, Player player) {
 		if (width < 0 || width > 50000 || height < 0 || height > 50000 || player == null)  {

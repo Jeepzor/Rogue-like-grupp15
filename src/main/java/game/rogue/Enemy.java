@@ -4,9 +4,9 @@ import java.util.concurrent.*;
 
 public class Enemy extends Character {
 	private static final int MAX_LEVEL = 100;
-	private double maxHitPoints;
+	private final double maxHitPoints;
 	private double currentHitPoints;
-	private boolean isAggressive;
+	private final boolean isAggressive;
 	private boolean isInCombat;
 	private int level;
 
