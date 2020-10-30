@@ -49,31 +49,30 @@ class PositionTest {
 	}
 
 	@Test
-	public void settingXToLessThan0ThrowsIAE() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			DEFAULT_POSITION.setX(-1, DEFAULT_WORLD);
-		});
+	public void enemyTriesToMoveOutsideTheMapOnXStopsAtEdge() {
+		DEFAULT_POSITION.setX(-1, DEFAULT_WORLD);
+		DEFAULT_POSITION.setY(0, DEFAULT_WORLD);
+
+		assertEquals(0, DEFAULT_POSITION.getX());
+		assertEquals(0, DEFAULT_POSITION.getX());
 	}
 
 	@Test
-	public void settingYToLessThan0ThrowsIAE() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			DEFAULT_POSITION.setY(-1, DEFAULT_WORLD);
-		});
+	public void enemyTriesToMoveOutsideTheMapOnYStopsAtEdge() {
+		DEFAULT_POSITION.setX(0, DEFAULT_WORLD);
+		DEFAULT_POSITION.setY(-1, DEFAULT_WORLD);
+
+		assertEquals(0, DEFAULT_POSITION.getX());
+		assertEquals(0, DEFAULT_POSITION.getX());
 	}
-	
+
 	@Test
-	public void settingYToMoreThanWorldHeightThrowsIAE() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			DEFAULT_POSITION.setY(DEFAULT_WORLD.getHeight() + 1, DEFAULT_WORLD);
-		});
-	}
-	
-	@Test
-	public void settingXToMoreThanWorldWidthThrowsIAE() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			DEFAULT_POSITION.setX(DEFAULT_WORLD.getWidth() + 1, DEFAULT_WORLD);
-		});
+	public void enemyTriesToMoveOutsideTheMapOnXAndY() {
+		DEFAULT_POSITION.setX(-1, DEFAULT_WORLD);
+		DEFAULT_POSITION.setY(-2, DEFAULT_WORLD);
+
+		assertEquals(0, DEFAULT_POSITION.getX());
+		assertEquals(0, DEFAULT_POSITION.getX());
 	}
 	
 	@Test

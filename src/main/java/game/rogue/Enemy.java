@@ -4,9 +4,9 @@ import java.util.concurrent.*;
 
 public class Enemy extends Character {
 	private static final int MAX_LEVEL = 100;
-	private double maxHitPoints;
+	private final double maxHitPoints;
 	private double currentHitPoints;
-	private boolean isAggressive;
+	private final boolean isAggressive;
 	private boolean isInCombat;
 	private int level;
 
@@ -82,12 +82,14 @@ public class Enemy extends Character {
 	}
 
 	public void moveRandomly(World world) {
-		int randomX = getRandomIntWithinRange(-30, 30);
-		int randomY = getRandomIntWithinRange(-30, 30);
+		int randomX = getRandomIntWithinRange();
+		int randomY = getRandomIntWithinRange();
 		move(world, randomX, randomY);
 	}
 
-	private int getRandomIntWithinRange(int min, int max) {
+	private int getRandomIntWithinRange() {
+		final int min = -30;
+		final int max = 30;
 		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 
