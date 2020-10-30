@@ -1,6 +1,7 @@
 package game.rogue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Inventory {
     private ArrayList<Item> bag;
@@ -35,7 +36,18 @@ public class Inventory {
         }
     }
 
-    public boolean canEquip(Equipment item){
+    public void validateEquippedItems(){
+       Iterator<Equipment> iterator = equippedItems.iterator();
+       while (iterator.hasNext()){
+           Equipment item = iterator.next();
+            if (!canWear(item)){
+                bag.add(item);
+                equippedItems.remove(item);
+            }
+        }
+    }
+
+    public boolean canWear(Equipment item){
         return hasRequireLevel(item) && hasRequireClass(item);
     }
 

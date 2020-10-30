@@ -1,6 +1,7 @@
 package game.rogue;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 
 public class InventoryTest {
     Player player = new Player(new Warrior(), new Position(5, 5));
@@ -12,7 +13,10 @@ public class InventoryTest {
     Armor boots = new Armor("Cloth");
     Armor bling = new Armor("plate", 5);
 
-
+    @BeforeEach
+    public void init(){
+        player.setInventory(bag);
+    }
     @Test
     public void hasRequireLevelToEquipItem(){
         assertFalse(bag.hasRequireLevel(bling));
@@ -23,6 +27,17 @@ public class InventoryTest {
     public void hasRequirementsForEquipment(){
         assertTrue(bag.hasRequireClass(boots));
         assertTrue(bag.hasRequireClass(plateArmor));
+    }
+
+    @Test
+    public void itemUnEquipsWhenChangingClass(){
+        bag.addItemToInventory(bling);
+        bag.addItemToInventory(boots);
+        player.setLevel(6);
+        bag.equipItem(bling);
+        bag.equipItem(boots);
+        player.changeClass(new Wizard());
+        assertEquals("[Armor]", bag.getEquippedItems());
     }
 
 

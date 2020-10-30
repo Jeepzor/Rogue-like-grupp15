@@ -29,11 +29,15 @@ public class Player extends Character{
     }
 
     public Inventory getInventory(){
-       if (this.inventory != null){
+       if (hasInventory()){
            return this.inventory;
        }else{
            throw new IllegalStateException("Player has no inventory!");
        }
+    }
+
+    public boolean hasInventory(){
+        return inventory != null;
     }
 
     public double getMaxHitPoints() {
@@ -101,6 +105,9 @@ public class Player extends Character{
         }
         setNewClass(newClass);
         setLevel(getLevel() - CLASS_CHANGE_COST);
+        if (hasInventory()) {
+            getInventory().validateEquippedItems();
+        }
     }
 
     public void gainAbility(Ability newAbility){
@@ -190,7 +197,7 @@ public class Player extends Character{
         this.currentMana = playerClass.getMaxMana(this.level);
     }
 
-    private void setLevel(int level){
+    public void setLevel(int level){
         this.level = level;
     }
 
