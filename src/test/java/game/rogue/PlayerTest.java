@@ -9,6 +9,7 @@ public class PlayerTest {
     PlayerClass warrior = new Warrior();
     PlayerClass warrior2 = new Warrior();
     Player playerWarrior = new Player(warrior, new Position(10, 10));
+    Inventory playerInventory = new Inventory(playerWarrior);
 
     PlayerClass wizard = new Wizard();
     PlayerClass wizard2 = new Wizard();
@@ -16,6 +17,17 @@ public class PlayerTest {
 
 
     //Class
+    @Test
+    public void playerHasNoInventory(){
+        assertThrows(IllegalStateException.class, () -> playerWarrior.getInventory());
+    }
+
+    @Test
+    public void addInventory(){
+        playerWarrior.setInventory(playerInventory);
+        assertEquals(playerWarrior.getInventory(),playerInventory);
+    }
+
     @Test
     public void correctClassStartHitPoints() {
         assertEquals(20, playerWarrior.getMaxHitPoints());

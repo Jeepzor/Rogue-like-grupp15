@@ -12,6 +12,7 @@ public class Player extends Character{
     private double currentMana;
     private PlayerClass playerClass;
     private ArrayList<Ability> abilities;
+    private Inventory inventory;
 
     public Player(PlayerClass playerClass, Position position){
         super(position);
@@ -21,6 +22,18 @@ public class Player extends Character{
         this.currentHitPoints = playerClass.getMaxHitPoints(this.level);
         this.currentMana = playerClass.getMaxMana(this.level);
         this.experience = 0;
+    }
+
+    public void setInventory(Inventory inventory){
+        this.inventory = inventory;
+    }
+
+    public Inventory getInventory(){
+       if (this.inventory != null){
+           return this.inventory;
+       }else{
+           throw new IllegalStateException("Player has no inventory!");
+       }
     }
 
     public double getMaxHitPoints() {
