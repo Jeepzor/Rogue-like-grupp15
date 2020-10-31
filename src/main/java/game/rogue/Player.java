@@ -78,16 +78,21 @@ public class Player extends Character{
     }
 
     /*If the amount is less than the needed XP for next level, simply increment XP by the amount.
-      Else set XP to be equal to the leftover */
+      Else, gain a level and call gainExperience again with the leftover */
     public void gainExperience(int amount){
         if (amount <= 0){
             throw new IllegalArgumentException("Experience amount has to be above 0!");
         }
         if (this.experience + amount < getNextLevelThreshold()){
             this.experience += amount;
-        }else{
-            this.experience = amount - (getNextLevelThreshold() - this.experience);
-            incrementLevel();
+        }else {
+            int previousExperience = this.experience;
+            int overflowingExperience = (amount - (getNextLevelThreshold() - previousExperience));
+            this.experience = 0;
+            if (overflowingExperience != 0){
+                incrementLevel();
+                gainExperience(overflowingExperience);
+            }
         }
     }
 

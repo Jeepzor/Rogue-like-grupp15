@@ -216,6 +216,13 @@ public class PlayerTest {
     }
 
     @Test
+    public void gainExperienceWorthMultipleLevels(){
+        assertEquals(1, playerWarrior.getLevel());
+        playerWarrior.gainExperience(650);
+        assertEquals(4, playerWarrior.getLevel());
+    }
+    // 100 , 200, 300
+    @Test
     public void getExperienceToNextLevel() {
         assertEquals(100, playerWarrior.getNextLevelThreshold());
         playerWarrior.gainExperience(150);
