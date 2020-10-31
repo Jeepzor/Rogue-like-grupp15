@@ -10,7 +10,7 @@ class FireballTest {
     @Test
     void createHigherThanMaxLevel(){
         Fireball fireball2 = new Fireball(6);
-        assertEquals(5, fireball.getLevel());
+        assertEquals(5, fireball2.getLevel());
     }
 
     @Test
