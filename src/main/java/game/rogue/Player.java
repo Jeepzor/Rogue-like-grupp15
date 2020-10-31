@@ -1,6 +1,7 @@
 package game.rogue;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Player extends Character{
     private static final int MAX_LEVEL = 100;
@@ -108,10 +109,11 @@ public class Player extends Character{
         if (hasInventory()) {
             getInventory().validateEquippedItems();
         }
+        validateAbilities();
     }
 
     public void gainAbility(Ability newAbility){
-        if (newAbility.hasRequiredClass(this.playerClass)){
+        if (canHaveAbility(newAbility)){
             boolean found = false;
             for (Ability temp : abilities)
                 if (newAbility.equals(temp)){
@@ -123,6 +125,20 @@ public class Player extends Character{
             }
         }else{
             throw new IllegalArgumentException("Class requirement unmet!");
+        }
+    }
+
+    public boolean canHaveAbility(Ability ability){
+        return ability.hasRequiredClass(this.playerClass);
+    }
+
+    public void validateAbilities(){
+        Iterator<Ability> iterator = abilities.iterator();
+        while (iterator.hasNext()){
+            Ability current = iterator.next();
+            if (!canHaveAbility(current)){
+                iterator.remove();
+            }
         }
     }
 

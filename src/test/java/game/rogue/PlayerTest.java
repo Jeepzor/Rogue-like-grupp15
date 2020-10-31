@@ -262,4 +262,14 @@ public class PlayerTest {
         playerWizard.gainAbility(fireball2);
         assertEquals(1, playerWizard.getAmountOfAbilities());
     }
+
+    @Test
+    public void loseAbilityOnClassChange(){
+        playerWizard.setLevel(10);
+        Fireball fireball = new Fireball(1);
+        playerWizard.gainAbility(fireball);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
+        playerWizard.changeClass(new Warrior());
+        assertEquals(0, playerWizard.getAmountOfAbilities());
+    }
 }
