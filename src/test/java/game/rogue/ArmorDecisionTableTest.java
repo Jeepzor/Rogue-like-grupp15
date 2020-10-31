@@ -29,10 +29,10 @@ class ArmorDecisionTableTest {
     public void canNotEquipItemWithFullInventory(){
         Inventory inventory = new Inventory(wizardPlayer);
         Armor armor4 = new Armor("Cloth");
-        inventory.addItemToInventory(armor1);
-        inventory.addItemToInventory(armor2);
-        inventory.addItemToInventory(armor3);
-        inventory.addItemToInventory(armor4);
+        inventory.addItemToNEItems(armor1);
+        inventory.addItemToNEItems(armor2);
+        inventory.addItemToNEItems(armor3);
+        inventory.addItemToNEItems(armor4);
         inventory.equipItem(armor1);
         inventory.equipItem(armor2);
         inventory.equipItem(armor3);
@@ -45,7 +45,7 @@ class ArmorDecisionTableTest {
     public void canNotEquipItemWithTooHighLevelReq(){
         Inventory inventory = new Inventory(wizardPlayer);
         Armor highLevelArmor = new Armor("Cloth", 10);
-        inventory.addItemToInventory(highLevelArmor);
+        inventory.addItemToNEItems(highLevelArmor);
         assertThrows(IllegalStateException.class, () -> {
             inventory.equipItem(highLevelArmor);
         });
@@ -54,8 +54,8 @@ class ArmorDecisionTableTest {
     @Test
     public void wizardCanEquipClothAndNotPlate(){
         Inventory inventory = new Inventory(wizardPlayer);
-        inventory.addItemToInventory(armor1);
-        inventory.addItemToInventory(plateArmor);
+        inventory.addItemToNEItems(armor1);
+        inventory.addItemToNEItems(plateArmor);
         assertDoesNotThrow( () -> {
             inventory.equipItem(armor1);
         });
@@ -67,8 +67,8 @@ class ArmorDecisionTableTest {
     @Test
     public void warriorCanEquipClothAndPlate(){
         Inventory inventory = new Inventory(warriorPlayer);
-        inventory.addItemToInventory(armor2);
-        inventory.addItemToInventory(plateArmor);
+        inventory.addItemToNEItems(armor2);
+        inventory.addItemToNEItems(plateArmor);
         assertDoesNotThrow(() -> {
             inventory.equipItem(armor2);
             inventory.equipItem(plateArmor);
