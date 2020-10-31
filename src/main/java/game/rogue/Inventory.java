@@ -4,61 +4,74 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Inventory {
-    private ArrayList<Item> bag;
-    private ArrayList<Equipment> equippedItems;
-    private Player player;
+    //non-equipped items
+    private final ArrayList<Item> nEItems;
+    private final ArrayList<Equipment> equippedItems;
+    private final Player player;
+    private static final int MAX_EQUIPPED_ITEMS = 3;
 
     public Inventory(Player player) {
-        bag = new ArrayList<>();
-        equippedItems = new ArrayList<>();
+        this.nEItems = new ArrayList<>();
+        this.equippedItems = new ArrayList<>();
         this.player = player;
     }
 
-    public void addItemToInventory(Item item) {
-        bag.add(item);
+    public void addItemToNEItems(Item item) {
+        nEItems.add(item);
     }
 
-    public void removeItemFromInventory(Item item) {
-        bag.remove(item);
+    public void removeItemFromNEItems(Item item) {
+        nEItems.remove(item);
     }
 
+    //Controls that contains item, then checks that equippedItems is not full, then checks that validly can equip item
+    //Then equips item and removes it from non-equipped items.
     public void equipItem(Equipment item){
-        if(!bag.contains(item)) {
+        if(!nEItems.contains(item)) {
             throw new IllegalStateException("This item is not in player's inventory");
         }
-        else if((equippedItems.size() >=3)){
+        else if((equippedItems.size() >=MAX_EQUIPPED_ITEMS)){
             throw new IllegalStateException("There are too many equipped items");
         }
         else if(!canWear(item)) {
             throw new IllegalStateException("Player can not equip that item");
         }
         else{
-            bag.remove(item);
+            removeItemFromNEItems(item);
             equippedItems.add(item);
         }
     }
 
 
+    public void unEquipItem(Equipment item){
+        if(equippedItems.contains(item)){
+            equippedItems.remove(item);
+            addItemToNEItems(item);
+        }else{
+            throw new IllegalStateException("That item is not equipped.");
+        }
+    }
+
+    //Loops through equipped items and checks if the equipped items still can be equipped. If not they are unequipped.
     public void validateEquippedItems(){
        Iterator<Equipment> iterator = equippedItems.iterator();
        while (iterator.hasNext()){
            Equipment item = iterator.next();
             if (!canWear(item)){
-                bag.add(item);
-                equippedItems.remove(item);
+                unEquipItem(item);
             }
         }
     }
 
     public boolean canWear(Equipment item){
-        return hasRequireLevel(item) && hasRequireClass(item);
+        return hasRequiredLevel(item) && hasRequiredClass(item);
     }
 
-    public boolean hasRequireLevel(Equipment item){
+    private boolean hasRequiredLevel(Equipment item){
         return this.player.getLevel() >= item.getLevelRequirement();
     }
 
-    public boolean hasRequireClass(Equipment item){
+    private boolean hasRequiredClass(Equipment item){
         if (item instanceof Armor){
             if (((Armor) item).isPlate()){
                 return this.player.canEquipPlate();
@@ -71,31 +84,16 @@ public class Inventory {
         return false;
     }
 
-    public void unEquipItem(Equipment item){
-        if(equippedItems.contains(item)){
-            equippedItems.remove(item);
-            bag.add(item);
-        }else{
-            throw new IllegalStateException("That item is not equipped.");
-        }
-    }
-
     public int getTotalWeight() {
         int result = 0;
-        for (Item item : bag) {
+        for (Item item : nEItems) {
             result += item.getWeight();
         }
         return result;
     }
-    //getBag() kanske inte ens behövs.
-    public ArrayList<Item> getBag() {
-        ArrayList<Item> inventoryCopy = new ArrayList<>();
-        inventoryCopy.addAll(bag);
-        return inventoryCopy;
-    }
 
     public String getItemsInBag() {
-        return bag.toString();
+        return nEItems.toString();
     }
 
     public String getEquippedItems(){
