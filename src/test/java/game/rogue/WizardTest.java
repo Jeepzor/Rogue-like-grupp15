@@ -11,81 +11,81 @@ class WizardTest {
     PlayerClass warrior = new Warrior();
 
     @Test
-    void getMaxHitPoints() {
+    public void getMaxHitPoints() {
         assertTrue(wizard.getMaxMana(1) == 20);
         assertTrue(wizard.getMaxMana(10) == 200);
     }
 
     @Test
-    void getMaxHitPointsNegativeLevel() {
+    public void getMaxHitPointsNegativeLevel() {
         assertThrows(IllegalArgumentException.class, () -> wizard.getMaxMana(-1));
     }
 
     @Test
-    void getMaxHitPointsLevelZero() {
+    public void getMaxHitPointsLevelZero() {
         assertThrows(IllegalArgumentException.class, () -> wizard.getMaxMana(0));
     }
 
     @Test
-    void getMana() {
+    public void getMana() {
         assertTrue(wizard.getMaxHitPoints(1) == 10);
         assertTrue(wizard.getMaxHitPoints(10) == 100);
     }
 
     @Test
-    void getManaNegativeLevel() {
+    public void getManaNegativeLevel() {
         assertThrows(IllegalArgumentException.class, () -> wizard.getMaxHitPoints(-1));
     }
 
     @Test
-    void getManaLevelZero() {
+    public void getManaLevelZero() {
         assertThrows(IllegalArgumentException.class, () -> wizard.getMaxHitPoints(0));
     }
 
     @Test
-    void canEquipCloth() {
+    public void canEquipCloth() {
         assertTrue(wizard.canEquipCloth());
     }
 
     @Test
-    void cantEquipPlate() {
+    public void cantEquipPlate() {
         assertFalse(wizard.canEquipPlate());
     }
 
     @Test
-    void getDamage() {
+    public void getDamage() {
         assertTrue(wizard.getDamage(1) == 2);
         assertTrue(wizard.getDamage(10) == 11);
     }
 
     @Test
-    void getDamageNegativeLevel() {
+    public void getDamageNegativeLevel() {
         assertThrows(IllegalArgumentException.class, () -> wizard.getDamage(-1));
     }
 
     @Test
-    void getDamageLevelZero() {
+    public void getDamageLevelZero() {
         assertThrows(IllegalArgumentException.class, () -> wizard.getDamage(0));
     }
 
     @Test
-    void testEquals() {
+    public void testEquals() {
         assertTrue(wizard.equals(wizard2));
     }
 
     @Test
-    void testNotEquals() {
+    public void testNotEquals() {
         assertFalse(wizard.equals(warrior));
     }
 
     @Test
-    void testHashCode() {
+    public void testHashCode() {
         assertTrue(wizard.hashCode() == wizard2.hashCode());
         assertFalse(wizard.hashCode() == warrior.hashCode());
     }
 
     @Test
-    void testToString() {
+    public void testToString() {
         assertEquals(wizard.toString(), "Class: Wizard");
     }
 }

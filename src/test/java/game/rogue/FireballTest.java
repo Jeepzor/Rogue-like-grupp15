@@ -6,12 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FireballTest {
     Fireball fireball = new Fireball(1);
-    Fireball fireball2 = new Fireball(4);
+    Fireball fireball2 = new Fireball(1);
+
+    PlayerClass wizard = new Wizard();
+    PlayerClass warrior = new Warrior();
+    Player playerWizard = new Player(wizard, new Position(10, 10));
+    Player playerWarrior = new Player(warrior, new Position(10, 10));
 
     @Test
     public void createHigherThanMaxLevel(){
-        Fireball fireball2 = new Fireball(6);
-        assertEquals(5, fireball2.getLevel());
+        Fireball fireball3 = new Fireball(6);
+        assertEquals(5, fireball3.getLevel());
     }
 
     @Test
@@ -22,6 +27,8 @@ class FireballTest {
         }
         assertThrows(IllegalStateException.class, () -> fireball.incrementLevel());
     }
+
+  
 
     @Test
     public void getDamageValue() {
@@ -39,6 +46,19 @@ class FireballTest {
     }
 
     @Test
+    public void testHashCode(){
+        assertEquals(fireball.hashCode(), fireball2.hashCode());
+    }
+
+    @Test
+    public void gainNewAbility(){
+        Fireball fireball = new Fireball(1);
+        playerWizard.gainAbility(fireball);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
+        assertThrows(IllegalArgumentException.class, () -> playerWarrior.gainAbility(fireball));
+    }
+
+    @Test
     public void hasRequiredClass() {
         Wizard playerWizard = new Wizard();
         Warrior playerWarrior = new Warrior();
@@ -47,7 +67,21 @@ class FireballTest {
     }
 
     @Test
-    public void testHashCode(){
-        assertEquals(fireball.hashCode(), fireball2.hashCode());
+    public void doNotGainAbilityIfItAlreadyExists(){
+        playerWizard.gainAbility(fireball);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
+        playerWizard.gainAbility(fireball2);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
+        assertEquals(2, fireball.getLevel());
+    }
+
+    @Test
+    public void loseAbilityOnClassChange(){
+        playerWizard.gainExperience(5000);
+        Fireball fireball = new Fireball(1);
+        playerWizard.gainAbility(fireball);
+        assertEquals(1, playerWizard.getAmountOfAbilities());
+        playerWizard.changeClass(new Warrior());
+        assertEquals(0, playerWizard.getAmountOfAbilities());
     }
 }

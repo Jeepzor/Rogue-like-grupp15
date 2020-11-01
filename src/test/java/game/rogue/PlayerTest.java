@@ -138,15 +138,14 @@ public class PlayerTest {
     }
 
     @Test
-    public void negativeHeal(){
+    public void gainNegativeHitPoints(){
         assertThrows(IllegalArgumentException.class, () -> playerWarrior.gainHitPoints(-1));
     }
 
     @Test
-    public void zeroHeal(){
+    public void gainZeroHitPoints(){
         assertThrows(IllegalArgumentException.class, () -> playerWarrior.gainHitPoints(0));
     }
-
 
     //Mana
     @Test
@@ -253,34 +252,5 @@ public class PlayerTest {
         assertEquals(100, playerWarrior.getLevel());
         playerWarrior.incrementLevel();
         assertEquals(100, playerWarrior.getLevel());
-    }
-
-    //Abilities
-    @Test
-    public void gainNewAbility(){
-        Fireball fireball = new Fireball(1);
-        playerWizard.gainAbility(fireball);
-        assertEquals(1, playerWizard.getAmountOfAbilities());
-        assertThrows(IllegalArgumentException.class, () -> playerWarrior.gainAbility(fireball));
-    }
-
-    @Test
-    public void gainSameAbilityIncrementLevel(){
-        Fireball fireball = new Fireball(1);
-        Fireball fireball2 = new Fireball(1);
-        playerWizard.gainAbility(fireball);
-        assertEquals(1, playerWizard.getAmountOfAbilities());
-        playerWizard.gainAbility(fireball2);
-        assertEquals(1, playerWizard.getAmountOfAbilities());
-    }
-
-    @Test
-    public void loseAbilityOnClassChange(){
-        playerWizard.gainExperience(5000);
-        Fireball fireball = new Fireball(1);
-        playerWizard.gainAbility(fireball);
-        assertEquals(1, playerWizard.getAmountOfAbilities());
-        playerWizard.changeClass(new Warrior());
-        assertEquals(0, playerWizard.getAmountOfAbilities());
     }
 }
