@@ -51,7 +51,7 @@ public class InventoryTest {
     public void itemUnEquipsWhenChangingClass(){
         bag.addItemToNEItems(bling);
         bag.addItemToNEItems(boots);
-        player.setLevel(6);
+        player.gainExperience(1500);
         bag.equipItem(bling);
         bag.equipItem(boots);
         player.changeClass(new Wizard());

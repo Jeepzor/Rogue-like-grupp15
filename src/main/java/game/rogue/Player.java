@@ -7,16 +7,19 @@ public class Player extends Character {
 	private static final int MAX_LEVEL = 100;
 	private static final int BASE_LEVEL_UP_THRESHOLD = 100;
 	private static final int CLASS_CHANGE_COST = 5;
+	private final ArrayList<Ability> abilities;
 	private int level;
 	private int experience;
 	private double currentHitPoints;
 	private double currentMana;
 	private PlayerClass playerClass;
-	private ArrayList<Ability> abilities;
 	private Inventory inventory;
 
 	public Player(PlayerClass playerClass, Position position) {
 		super(position);
+		if (playerClass == null){
+			throw new IllegalArgumentException("Class can not be null");
+		}
 		this.abilities = new ArrayList<>();
 		this.playerClass = playerClass;
 		this.level = 1;
@@ -37,7 +40,7 @@ public class Player extends Character {
 		}
 	}
 
-	boolean hasInventory() {
+	private boolean hasInventory() {
 		return inventory != null;
 	}
 
@@ -79,8 +82,8 @@ public class Player extends Character {
 
 	/*
 	 * If the amount is less than the needed XP for next level, simply increment XP
-	 * by the amount. Else, gain a level and call gainExperience again with the
-	 * leftover
+	 * Else, gain a level and set the current experience to 0,
+	 * then call gainExperience again while passing the remainder (if it's greater than 0).
 	 */
 	public void gainExperience(int amount) {
 		if (amount <= 0) {
@@ -93,7 +96,7 @@ public class Player extends Character {
 			int overflowingExperience = (amount - (getNextLevelThreshold() - previousExperience));
 			this.experience = 0;
 			if (overflowingExperience != 0) {
-				incrementLevel();
+				levelUp();
 				gainExperience(overflowingExperience);
 			}
 		}
@@ -102,9 +105,14 @@ public class Player extends Character {
 	public void levelUp() {
 		incrementLevel();
 		healToMaxHitPoints();
-		gainManaToMaxHitPoints();
+		gainManaToMaxMana();
 	}
 
+   /*
+	* Changes the class of the player as long as: The player is at least level 6,
+	* and the new class is different from the current class. Reduce level by 6, Then check if spells and equipment
+	* need to be un-equipped / un-learned and do so.
+	*/
 	public void changeClass(PlayerClass newClass) {
 		if (newClass.equals(this.playerClass)) {
 			throw new IllegalArgumentException("New class can't be the same as the current class");
@@ -140,6 +148,9 @@ public class Player extends Character {
 		return ability.hasRequiredClass(this.playerClass);
 	}
 
+   /*
+    * Iterate through all abilities and remove them if the player no longer meets the requirements.
+    */
 	public void validateAbilities() {
 		Iterator<Ability> iterator = abilities.iterator();
 		while (iterator.hasNext()) {
@@ -201,7 +212,7 @@ public class Player extends Character {
 		}
 	}
 
-	public boolean canAffordMana(double amount) {
+	private boolean canAffordMana(double amount) {
 		if (amount < 0) {
 			throw new IllegalArgumentException("Mana cost can't be negative!");
 		}
@@ -217,11 +228,11 @@ public class Player extends Character {
 		this.currentHitPoints = playerClass.getMaxHitPoints(this.level);
 	}
 
-	private void gainManaToMaxHitPoints() {
+	private void gainManaToMaxMana() {
 		this.currentMana = playerClass.getMaxMana(this.level);
 	}
 
-	public void setLevel(int level) {
+	private void setLevel(int level) {
 		this.level = level;
 	}
 

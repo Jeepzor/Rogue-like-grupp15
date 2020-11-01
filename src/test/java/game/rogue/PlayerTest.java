@@ -23,6 +23,11 @@ public class PlayerTest {
     }
 
     @Test
+    public void playerHasNoClass(){
+        assertThrows(IllegalArgumentException.class, () ->  new Player(null, new Position(10, 10)));
+    }
+
+    @Test
     public void addInventory(){
         playerWarrior.setInventory(playerInventory);
         assertEquals(playerWarrior.getInventory(),playerInventory);
@@ -272,7 +277,7 @@ public class PlayerTest {
 
     @Test
     public void loseAbilityOnClassChange(){
-        playerWizard.setLevel(10);
+        playerWizard.gainExperience(5000);
         Fireball fireball = new Fireball(1);
         playerWizard.gainAbility(fireball);
         assertEquals(1, playerWizard.getAmountOfAbilities());
