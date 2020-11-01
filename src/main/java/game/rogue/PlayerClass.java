@@ -13,7 +13,7 @@ public abstract class PlayerClass {
     public abstract double getDamage(int level);
 
     public boolean canEquipCloth(){
-        return false;
+        return true;
     }
 
     public boolean canEquipPlate(){

@@ -10,17 +10,18 @@ public class Warrior extends PlayerClass{
 
     @Override
     public double getMaxHitPoints(int level) {
+        if (level <= 0){
+            throw new IllegalArgumentException("Level can't be negative or zero!");
+        }
         return this.baseHitPoints * level;
     }
 
     @Override
     public double getMaxMana(int level) {
+        if (level <= 0){
+            throw new IllegalArgumentException("Level can't be negative or zero!");
+        }
         return this.baseMana;
-    }
-
-    @Override
-    public boolean canEquipCloth(){
-        return true;
     }
 
     @Override
@@ -40,6 +41,9 @@ public class Warrior extends PlayerClass{
 
     @Override
     public double getDamage(int level){
+        if (level <= 0){
+            throw new IllegalArgumentException("Level can't be negative or zero!");
+        }
         return baseDamage + damagePerLevel * (level - 1);
     }
 

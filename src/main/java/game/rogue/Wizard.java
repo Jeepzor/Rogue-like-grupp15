@@ -24,11 +24,6 @@ public class Wizard extends PlayerClass{
     }
 
     @Override
-    public boolean canEquipCloth(){
-        return true;
-    }
-
-    @Override
     public double getDamage(int level){
         if (level <= 0){
             throw new IllegalArgumentException("Level can't be negative or zero!");
