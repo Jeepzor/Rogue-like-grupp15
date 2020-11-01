@@ -137,4 +137,10 @@ public class InventoryTest {
             bag.equipItem(bling);
         });
     }
+    @Test
+    public void hasRequiredClassReturnsFalseWithWeapon(){
+        Weapon ax = new Weapon(5, false);
+        bag.addItemToNEItems(ax);
+        assertFalse(bag.canWear(ax));
+    }
 }
