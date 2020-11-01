@@ -239,43 +239,43 @@ public class EnemyTest {
 
 	@Test
 	public void enemyDetectsPlayerWhenInArea() {
-		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(DEFAULT_WORLD));
+		assertTrue(DEFAULT_ENEMY.hasPlayerInDetectionRange(DEFAULT_WORLD));
 	}
 
 	@Test
 	public void enemyDoesNotDetectPlayerWhenYNotInRange() {
 		World w = new World(5000, 7500, new Player(new Warrior(), new Position(45, 150)));
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertFalse(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 	}
 
 	@Test
 	public void enemyDoesNotFindPlayerWhenXNotInRange() {
 		World w = new World(5000, 7500, new Player(new Warrior(), new Position(10, 70)));
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertFalse(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 	}
 
 	@Test
 	public void enemyDoesNotFindPlayerWhenXAndYNotInRange() {
 		World w = new World(5000, 6500, new Player(new Warrior(), new Position(250, 350)));
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertFalse(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 	}
 
 	@Test
 	public void enemyDetectsPlayerAfterMovingCloseToIt() {
 		World w = new World(5000, 7500, new Player(new Warrior(), new Position(100, 100)));
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertFalse(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 		DEFAULT_ENEMY.move(w, 35, 10);
-		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertTrue(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 	}
 
 	@Test
 	public void aggressiveEnemyAttacksPlayerWhenMovesInRange() {
 		World w = new World(5000, 7500, new Player(new Warrior(), new Position(100, 100)));
-		assertFalse(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertFalse(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 		assertFalse(DEFAULT_ENEMY.isInCombat());
 
 		DEFAULT_ENEMY.move(w, 50, 30);
-		assertTrue(DEFAULT_ENEMY.hasPlayerInArea(w));
+		assertTrue(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 		assertTrue(DEFAULT_ENEMY.isInCombat());
 	}
 
@@ -283,11 +283,11 @@ public class EnemyTest {
 	public void nonAggressiveEnemyDoesNotAttackPlayerWhenMovesIntoRange() {
 		World w = new World(5000, 7500, new Player(new Warrior(), new Position(100, 100)));
 		Enemy e = new Enemy(3, false, new Position(50, 50));
-		assertFalse(e.hasPlayerInArea(w));
+		assertFalse(e.hasPlayerInDetectionRange(w));
 		assertFalse(e.isInCombat());
 
 		e.move(w, 45, 40);
-		assertTrue(e.hasPlayerInArea(w));
+		assertTrue(e.hasPlayerInDetectionRange(w));
 		assertFalse(e.isInCombat());
 	}
 

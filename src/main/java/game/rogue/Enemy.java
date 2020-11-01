@@ -4,7 +4,9 @@ import java.util.concurrent.*;
 
 public class Enemy extends Character {
 	private static final int MAX_LEVEL = 100;
-	private final double maxHitPoints;
+	private static final int MAX_RANGE_TO_MOVE_RANDOMLY = 30;
+	private static final int DETECTION_RANGE = 15;
+	private double maxHitPoints;
 	private double currentHitPoints;
 	private final boolean isAggressive;
 	private boolean isInCombat;
@@ -76,31 +78,41 @@ public class Enemy extends Character {
 	@Override
 	public void move(World world, int x, int y) {
 		super.move(world, x, y);
-		if (hasPlayerInArea(world) && isAggressive) {
+		if (hasPlayerInDetectionRange(world) && isAggressive) {
 			startCombat(world.getPlayer());
 		}
 	}
 
+	/*
+	 * Calls moveRandomWithinRange() to get a random int within a specific range for
+	 * both x and y and then moves by that amount
+	 */
 	public void moveRandomly(World world) {
 		int randomX = getRandomIntWithinRange();
 		int randomY = getRandomIntWithinRange();
 		move(world, randomX, randomY);
 	}
 
+	/*
+	 * Returns an int within a specific range. Max is the constant
+	 * MAX_AMOUNT_TO_MOVE_RANDOML and min is the negation of it
+	 */
 	private int getRandomIntWithinRange() {
-		final int min = -30;
-		final int max = 30;
-		return ThreadLocalRandom.current().nextInt(min, max + 1);
+		return ThreadLocalRandom.current().nextInt(-MAX_RANGE_TO_MOVE_RANDOMLY, MAX_RANGE_TO_MOVE_RANDOMLY + 1);
 	}
 
-	public boolean hasPlayerInArea(World world) {
+	/*
+	 * Called after the enemy has moved and checks if the player is within range to be
+	 * attacked.Returns true if the player is within range on both x and y. 
+	 */
+	public boolean hasPlayerInDetectionRange(World world) {
 		Position playerPos = world.getPlayer().getPosition();
 		Position enemyPos = getPosition();
-		return isInRange(enemyPos.getX(), playerPos.getX()) && isInRange(enemyPos.getY(), playerPos.getY());
+		return isInDetectionRange(enemyPos.getX(), playerPos.getX()) && isInDetectionRange(enemyPos.getY(), playerPos.getY());
 	}
 
-	private boolean isInRange(int enemyPos, int playerPos) {
-		return enemyPos > playerPos ? enemyPos - playerPos <= 15 : playerPos - enemyPos <= 15;
+	private boolean isInDetectionRange(int enemyPos, int playerPos) {
+		return enemyPos > playerPos ? enemyPos - playerPos <= DETECTION_RANGE : playerPos - enemyPos <= DETECTION_RANGE;
 	}
 
 	private void startCombat(Player player) {
