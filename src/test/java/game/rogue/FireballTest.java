@@ -6,15 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FireballTest {
     Fireball fireball = new Fireball(1);
+    Fireball fireball2 = new Fireball(4);
 
     @Test
-    void createHigherThanMaxLevel(){
+    public void createHigherThanMaxLevel(){
         Fireball fireball2 = new Fireball(6);
         assertEquals(5, fireball2.getLevel());
     }
 
     @Test
-    void levelUpTest() {
+    public void levelUpTest() {
         for(int i = 1; i < 5; i++){
             fireball.incrementLevel();
             assertEquals(i + 1, fireball.getLevel());
@@ -23,7 +24,7 @@ class FireballTest {
     }
 
     @Test
-    void getDamageValue() {
+    public void getDamageValue() {
         assertEquals(3, fireball.getDamageValue());
         fireball.incrementLevel();
 
@@ -31,17 +32,22 @@ class FireballTest {
     }
 
     @Test
-    void getManaCost() {
+    public void getManaCost() {
         assertEquals(8, fireball.getManaCost());
         fireball.incrementLevel();
         assertEquals(7, fireball.getManaCost());
     }
 
     @Test
-    void hasRequiredClass() {
+    public void hasRequiredClass() {
         Wizard playerWizard = new Wizard();
         Warrior playerWarrior = new Warrior();
         assertTrue(fireball.hasRequiredClass(playerWizard));
         assertFalse(fireball.hasRequiredClass(playerWarrior));
+    }
+
+    @Test
+    public void testHashCode(){
+        assertEquals(fireball.hashCode(), fireball2.hashCode());
     }
 }
