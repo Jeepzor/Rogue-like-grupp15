@@ -13,8 +13,4 @@ public class PotionOfKnowledge extends Consumable{
     public PotionOfKnowledge(){
         super(DEFAULT_WEIGHT);
     }
-
-    public int getSize(){
-        return DEFAULT_SIZE;
-    }
 }

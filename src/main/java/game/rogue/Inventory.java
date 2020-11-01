@@ -78,8 +78,6 @@ public class Inventory {
             }else if (((Armor) item).isCloth()){
                 return this.player.canEquipCloth();
             }
-        }else if (item instanceof Weapon) {
-            return false; // Temporary
         }
         return false;
     }
