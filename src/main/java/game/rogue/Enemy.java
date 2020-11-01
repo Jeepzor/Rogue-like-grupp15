@@ -59,10 +59,10 @@ public class Enemy extends Character {
 		if (amount < 0) {
 			throw new IllegalArgumentException("Healing amount has to be above 0");
 		}
-		if (currentHitPoints == getMaxHitPoints()) {
+		else if (currentHitPoints == getMaxHitPoints()) {
 			throw new IllegalArgumentException("Player is already at full health");
 		}
-		if ((currentHitPoints + amount) > getMaxHitPoints()) {
+		else if ((currentHitPoints + amount) > getMaxHitPoints()) {
 			healToMaxHitPoints();
 		} else {
 			currentHitPoints += amount;
@@ -120,5 +120,4 @@ public class Enemy extends Character {
 	public void attack(Player player) {
 		player.takeDamage(getStrength());
 	}
-
 }

@@ -189,7 +189,7 @@ public class EnemyTest {
 	}
 
 	@Test
-	public void enemyTriesToMoveOutsideTheMapOnXStopsAtEdge() {
+	public void enemyTriesToMoveOutsideTheMapOnMinXStopsAtEdge() {
 		final int currentX = DEFAULT_ENEMY.getPosition().getX();
 		final int currentY = DEFAULT_ENEMY.getPosition().getY();
 
@@ -199,12 +199,32 @@ public class EnemyTest {
 	}
 
 	@Test
-	public void enemyTriesToMoveOutsideTheMapOnYStopsAtEdge() {
+	public void enemyTriesToMoveOutsideTheMapOnMaxXStopsAtEdge() {
+		final int currentX = DEFAULT_ENEMY.getPosition().getX();
+		final int currentY = DEFAULT_ENEMY.getPosition().getY();
+
+		DEFAULT_ENEMY.move(DEFAULT_WORLD, DEFAULT_WORLD.getWidth(), 10);
+		assertEquals(DEFAULT_WORLD.getWidth(), DEFAULT_ENEMY.getPosition().getX());
+		assertEquals(currentY + 10, DEFAULT_ENEMY.getPosition().getY());
+	}
+
+	@Test
+	public void enemyTriesToMoveOutsideTheMapOnMinYStopsAtEdge() {
 		final int currentX = DEFAULT_ENEMY.getPosition().getX();
 		final int currentY = DEFAULT_ENEMY.getPosition().getY();
 
 		DEFAULT_ENEMY.move(DEFAULT_WORLD, 10, -(currentY + 1));
 		assertEquals(0, DEFAULT_ENEMY.getPosition().getY());
+		assertEquals(currentX + 10, DEFAULT_ENEMY.getPosition().getX());
+	}
+
+	@Test
+	public void enemyTriesToMoveOutsideTheMapOnMaxYStopsAtEdge() {
+		final int currentX = DEFAULT_ENEMY.getPosition().getX();
+		final int currentY = DEFAULT_ENEMY.getPosition().getY();
+
+		DEFAULT_ENEMY.move(DEFAULT_WORLD, 10, DEFAULT_WORLD.getHeight());
+		assertEquals(DEFAULT_WORLD.getHeight(), DEFAULT_ENEMY.getPosition().getY());
 		assertEquals(currentX + 10, DEFAULT_ENEMY.getPosition().getX());
 	}
 
@@ -227,14 +247,16 @@ public class EnemyTest {
 
 			e.moveRandomly(DEFAULT_WORLD);
 
-			boolean newXIsWithinRange = currentX > e.getPosition().getX() ? currentX - e.getPosition().getX() <= 30
-					: e.getPosition().getX() - currentX <= 30;
-			boolean newYIsWithinRange = currentY > e.getPosition().getY() ? currentY - e.getPosition().getY() <= 30
-					: e.getPosition().getY() - currentY <= 30;
+			boolean newXIsWithinRange = isWithinRange(currentX, e.getPosition().getX());
+			boolean newYIsWithinRange = isWithinRange(currentY, e.getPosition().getY());
 
 			assertTrue(newXIsWithinRange);
 			assertTrue(newYIsWithinRange);
 		}
+	}
+
+	private boolean isWithinRange(int currentP, int newP) {
+		return currentP > newP ? currentP - newP <= 30 : newP - currentP <= 30;
 	}
 
 	@Test
@@ -270,23 +292,23 @@ public class EnemyTest {
 
 	@Test
 	public void aggressiveEnemyAttacksPlayerWhenMovesInRange() {
-		World w = new World(5000, 7500, new Player(new Warrior(), new Position(100, 100)));
+		World w = new World(5000, 7500, new Player(new Warrior(), new Position(95, 90)));
 		assertFalse(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 		assertFalse(DEFAULT_ENEMY.isInCombat());
 
-		DEFAULT_ENEMY.move(w, 50, 30);
+		DEFAULT_ENEMY.move(w, 30, 25);
 		assertTrue(DEFAULT_ENEMY.hasPlayerInDetectionRange(w));
 		assertTrue(DEFAULT_ENEMY.isInCombat());
 	}
 
 	@Test
 	public void nonAggressiveEnemyDoesNotAttackPlayerWhenMovesIntoRange() {
-		World w = new World(5000, 7500, new Player(new Warrior(), new Position(100, 100)));
-		Enemy e = new Enemy(3, false, new Position(50, 50));
+		World w = new World(5000, 7500, new Player(new Warrior(), new Position(85, 100)));
+		Enemy e = new Enemy(3, false, new Position(50, 55));
 		assertFalse(e.hasPlayerInDetectionRange(w));
 		assertFalse(e.isInCombat());
 
-		e.move(w, 45, 40);
+		e.move(w, 20, 30);
 		assertTrue(e.hasPlayerInDetectionRange(w));
 		assertFalse(e.isInCombat());
 	}
