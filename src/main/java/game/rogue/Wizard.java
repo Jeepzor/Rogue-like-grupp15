@@ -9,11 +9,17 @@ public class Wizard extends PlayerClass{
     private double damagePerLevel = 1;
 
     public double getMaxHitPoints(int level) {
+        if (level <= 0){
+            throw new IllegalArgumentException("Level can't be negative or zero!");
+        }
         return this.baseHitPoints * level;
     }
 
     @Override
     public double getMaxMana(int level) {
+        if (level <= 0){
+            throw new IllegalArgumentException("Level can't be negative or zero!");
+        }
         return this.baseMana * level;
     }
 
@@ -24,6 +30,9 @@ public class Wizard extends PlayerClass{
 
     @Override
     public double getDamage(int level){
+        if (level <= 0){
+            throw new IllegalArgumentException("Level can't be negative or zero!");
+        }
         return baseDamage + damagePerLevel * (level - 1);
     }
 
