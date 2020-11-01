@@ -9,7 +9,6 @@ public class Fireball extends Ability{
     private static final double MANA_COST_PER_LEVEL = -1;
     private static final PlayerClass REQUIRED_CLASS = new Wizard();
 
-    private int level;
     public Fireball(int level) {
         super(level);
     }
