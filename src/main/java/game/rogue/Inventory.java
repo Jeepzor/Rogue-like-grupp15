@@ -92,11 +92,11 @@ public class Inventory {
         return result;
     }
 
-    public String getItemsInBag() {
+    public String itemsNEToString() {
         return nEItems.toString();
     }
 
-    public String getEquippedItems(){
+    public String equippedItemsToString(){
         return equippedItems.toString();
     }
 }

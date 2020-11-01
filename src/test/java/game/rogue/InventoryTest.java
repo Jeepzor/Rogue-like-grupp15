@@ -55,7 +55,7 @@ public class InventoryTest {
         bag.equipItem(bling);
         bag.equipItem(boots);
         player.changeClass(new Wizard());
-        assertEquals("[Armor]", bag.getEquippedItems());
+        assertEquals("[Armor]", bag.equippedItemsToString());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class InventoryTest {
 
     @Test
     public void newInventoryIsEmpty() {
-        assertEquals("[]", bag.getItemsInBag());
+        assertEquals("[]", bag.itemsNEToString());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class InventoryTest {
     public void inventoryContentsReturnsItems(){
         bag.addItemToNEItems(rock);
         bag.addItemToNEItems(pebble);
-        assertEquals("[Rock, Rock]", bag.getItemsInBag());
+        assertEquals("[Rock, Rock]", bag.itemsNEToString());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class InventoryTest {
     public void equipItemFromBag(){
         bag.addItemToNEItems(plateArmor);
         bag.equipItem(plateArmor);
-        assertEquals("[Armor]", bag.getEquippedItems());
+        assertEquals("[Armor]", bag.equippedItemsToString());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class InventoryTest {
         bag.addItemToNEItems(plateArmor);
         bag.equipItem(plateArmor);
         bag.unEquipItem(plateArmor);
-        assertEquals("[]", bag.getEquippedItems());
+        assertEquals("[]", bag.equippedItemsToString());
     }
 
     @Test
