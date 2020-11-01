@@ -17,6 +17,7 @@ public class InventoryTest {
     public void init(){
         player.setInventory(bag);
     }
+    
     @Test
     public void hasRequireLevelToEquipItem(){
         assertFalse(bag.hasRequireLevel(bling));
