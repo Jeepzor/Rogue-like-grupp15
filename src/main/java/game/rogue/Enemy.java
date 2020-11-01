@@ -6,11 +6,10 @@ public class Enemy extends Character {
 	private static final int MAX_LEVEL = 100;
 	private static final int MAX_RANGE_TO_MOVE_RANDOMLY = 30;
 	private static final int DETECTION_RANGE = 15;
-	private double maxHitPoints;
-	private double currentHitPoints;
+	private final int level;
 	private final boolean isAggressive;
+	private double currentHitPoints;
 	private boolean isInCombat;
-	private int level;
 
 	public Enemy(int level, boolean isAggressive, Position position) {
 		super(position);
@@ -18,13 +17,12 @@ public class Enemy extends Character {
 			throw new IllegalArgumentException("Level has to be between 1 and 100");
 		}
 		this.level = level;
-		this.maxHitPoints = (level * 2) * Math.sqrt(level);
-		this.currentHitPoints = maxHitPoints;
+		this.currentHitPoints = getMaxHitPoints();
 		this.isAggressive = isAggressive;
 	}
 
 	public double getMaxHitPoints() {
-		return maxHitPoints;
+		return (level * 2) * Math.sqrt(level);
 	}
 
 	public double getCurrentHitPoints() {
@@ -48,7 +46,7 @@ public class Enemy extends Character {
 	}
 
 	private void healToMaxHitPoints() {
-		currentHitPoints = maxHitPoints;
+		currentHitPoints = getMaxHitPoints();
 	}
 
 	public void damage(double amount) {
@@ -61,10 +59,10 @@ public class Enemy extends Character {
 		if (amount < 0) {
 			throw new IllegalArgumentException("Healing amount has to be above 0");
 		}
-		if (currentHitPoints == maxHitPoints) {
+		if (currentHitPoints == getMaxHitPoints()) {
 			throw new IllegalArgumentException("Player is already at full health");
 		}
-		if ((currentHitPoints + amount) > maxHitPoints) {
+		if ((currentHitPoints + amount) > getMaxHitPoints()) {
 			healToMaxHitPoints();
 		} else {
 			currentHitPoints += amount;
@@ -79,7 +77,7 @@ public class Enemy extends Character {
 	public void move(World world, int x, int y) {
 		super.move(world, x, y);
 		if (hasPlayerInDetectionRange(world) && isAggressive) {
-			startCombat(world.getPlayer());
+			startCombat();
 		}
 	}
 
@@ -95,7 +93,7 @@ public class Enemy extends Character {
 
 	/*
 	 * Returns an int within a specific range. Max is the constant
-	 * MAX_AMOUNT_TO_MOVE_RANDOML and min is the negation of it
+	 * MAX_AMOUNT_TO_MOVE_RANDOMLY and min is the negation of it
 	 */
 	private int getRandomIntWithinRange() {
 		return ThreadLocalRandom.current().nextInt(-MAX_RANGE_TO_MOVE_RANDOMLY, MAX_RANGE_TO_MOVE_RANDOMLY + 1);
@@ -115,7 +113,7 @@ public class Enemy extends Character {
 		return enemyPos > playerPos ? enemyPos - playerPos <= DETECTION_RANGE : playerPos - enemyPos <= DETECTION_RANGE;
 	}
 
-	private void startCombat(Player player) {
+	private void startCombat() {
 		isInCombat = true;
 	}
 
