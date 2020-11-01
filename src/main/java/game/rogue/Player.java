@@ -89,6 +89,11 @@ public class Player extends Character {
 		if (amount <= 0) {
 			throw new IllegalArgumentException("Experience amount has to be above 0!");
 		}
+
+		if (getLevel() == MAX_LEVEL) {
+			return;
+		}
+
 		if (this.experience + amount < getNextLevelThreshold()) {
 			this.experience += amount;
 		} else {
